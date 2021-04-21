@@ -14,5 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        // \App\Models\Profillulusan::factory(50)->create();
+        $this->call([
+            ProfillulusanSeeder::class,
+            DetailprofillulusanSeeder::class,
+            UsersSeeder::class
+        ]);
     }
 }

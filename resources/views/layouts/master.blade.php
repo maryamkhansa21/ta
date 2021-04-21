@@ -77,18 +77,61 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <router-link to="/dashboard" class="nav-link">
+                            <router-link to="/home/dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt cyan"></i>
                                 <p>Dashboard</p>
                             </router-link>
                         </li>
 
                         <li class="nav-item">
-                            <router-link to="/profillulusan" class="nav-link">
+                            <router-link to="/home/profillulusan" class="nav-link">
                                 <i class="nav-icon fas fa-user yellow"></i>
                                 <p>Profil Lulusan</p>
                             </router-link>
                         </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/detailprofillulusan" class="nav-link">
+                                <i class="nav-icon fas fa-list"></i>
+                                <p>Detail Profil Lulusan</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/cplprodi" class="nav-link">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>CPL Program Studi</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/rumuscpl" class="nav-link">
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>Merumuskan CPL</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/kesepadananku" class="nav-link">
+                                <i class="nav-icon fas fa-clone"></i>
+                                <p>Kesepadanan KU</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/bahankajian" class="nav-link">
+                                <i class="nav-icon fas fa-folder"></i>
+                                <p>Pemilihan Bahan Kajian</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/kajian" class="nav-link">
+                                <i class="nav-icon fas fa-folder"></i>
+                                <p>Penetapan Mata Kuliah</p>
+                            </router-link>
+                        </li>
+
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                    document.getElementById('logout-form').submit();" class="nav-link">
@@ -133,11 +176,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
+
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2020 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2021 Desain Kurikulum Perguruan Tinggi.</strong>
         </footer>
     </div>
 

@@ -1,11 +1,10 @@
 <template>
-    <div class="container">
+      <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Penetapan Profil Lulusan</h3>
-
+                <h3 class="card-title">Kajian dan Penetapan Mata Kuliah</h3>
                 <div class="card-tools">
                      <button class="btn btn-success" @click="newModal">Tambah <i class="fas fa-user-plus fa-fw"></i></button>
                 </div>
@@ -14,27 +13,27 @@
               <div class="card-body table-responsive p-0">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                    <tr role="row">
-                      <th>Profil Lulusan</th>
-                      <th>Deskripsi</th>
+                    <tr>
+                      <th>CPL</th>
+                      <th>Bahan Kajian</th>
+                      <th>Mata Kuliah</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="profillulusan in profillulusan" :key="profillulusan.id">
-                      <td>{{profillulusan.profillulusan}}</td>
-                      <td>{{profillulusan.deskripsi}}</td>
-                      <td>
-                          <a href="#" @click="editModal(profillulusan)">
+                    <tr v-for="k in kajian" :key="k.id">
+                      <td>{{k.detailprofillulusan.detail}}</td>
+                      <td>{{k.bahankajian.bahankajian}}</td>
+                      <td>{{k.matkul}}  
+                        <td>
+                          <a href="#" @click="editModal(c)">
                               <i class="fas fa-edit fa-fw"></i>
                           </a>
                           
-                          <a href="#" @click="deleteProfillulusan(profillulusan.id)">
+                          <a href="#" @click="deleteKajian(c.id)">
                               <i class="fas fa-trash fa-fw"></i>
                           </a>
-                      </td>
-                    </tr>
-                    <tr>
+                      </td>    
                     </tr>
                   </tbody>
                 </table>
@@ -50,28 +49,36 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Profil Lulusan</h5>
-                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Profil Lulusan</h5>
+                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Mata Kulian</h5>
+                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Mata Kuliah</h5>
                 <button type="button" class="close" data-dismiss="modal"
                 aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="editMode ? updateProfillulusan() : createProfillulusan()">
+            <form @submit.prevent="editMode ? updateKajian() : createKajian()">
             <div class="modal-body">
                <div class="form-group">
-                <input v-model="form.profillulusan" type="text" name="profillulusan"
-                    placeholder="Profil Lulusan"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('profillulusan') }">
-                <has-error :form="form" field="profillulusan"></has-error>
+                     <select name="detail_id" v-model="form.detail_id" id="detail" class="form-control" :class="{ 'is-invalid': form.errors.has('detail_id') }">
+                        <option v-for="detail in detailprofillulusan" :key="detail.id" v-bind:value="detail.id">{{ detail.detailprofillulusan }}</option>
+                    </select>
+                <has-error :form="form" field="detail"></has-error>
                 </div>
 
-                 <div class="form-group">
-                <input v-model="form.deskripsi" type="text" name="deskripsi"
-                    placeholder="Deskripsi"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('deskripsi') }">
-                <has-error :form="form" field="deskripsi"></has-error>
+               <div class="form-group">
+                     <select name="bahankajian_id" v-model="form.bahankajian_id" id="bahankajian" class="form-control" :class="{ 'is-invalid': form.errors.has('bahankajian_id') }">
+                        <option v-for="bahankajian in bahankajian" :key="bahankajian.id" v-bind:value="bahankajian.id">{{ bahankajian.bahankajian }}</option>
+                    </select>
+                <has-error :form="form" field="bahankajian"></has-error>
                 </div>
+            
+            <div class="form-group">
+                <input v-model="form.matkul" type="text" name="matkul"
+                    placeholder="Mata Kuliah"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('matkul') }">
+                <has-error :form="form" field="matkul"></has-error>
+                </div>
+            
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -91,16 +98,18 @@
         data () {
             return {
                 editMode: false,
-                profillulusan : [],
-                form:new Form({
-                    profillulusan :'',
-                    deskripsi:''
+                detailprofillulusan : [],
+                bahankajian : [],
+                  form:new Form({
+                    detail_id :'',
+                    bahankajian_id :'',
+                    matkul :''
                 })
             }
         },
-        methods:{
-           updateProfillulusan(){
-                this.form.put(URL+'api/profillulusan'+this.form.id);
+       methods:{
+         updateKajian(){
+                this.form.put(URL+'api/kajian'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -111,18 +120,18 @@
                          Fire.$emit('AfterCreate');
                 
             },
-            editModal(profillulusan){
+            editModal(kajian){
                 this.editMode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(profillulusan);
+                this.form.fill(kajian);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-           deleteProfillulusan(id){
+           deleteKajian(id){
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -134,7 +143,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete(URL+'api/profillulusan/'+id).then(()=>{
+                                this.form.delete(URL+'api/kajian/'+id).then(()=>{
                                         Swal.fire(
                                         'Deleted!',
                                         'Your file has been deleted.',
@@ -147,14 +156,25 @@
                          }
                     })
             },
-          loadProfillulusan(){
-              axios.get(URL+'api/profillulusan').then(data => {
-                  this.profillulusan = data.data.data;
+         loadKajian(){
+              axios.get(URL+'api/kajian').then(data => {
+                  this.kajian = data.data.data;
+                  console.log(data);
+              });
+         },
+          loadDetailprofillulusan(){
+              axios.get(URL+'api/detailprofillulusan').then(data => {
+                  this.detailprofillulusan = data.data.data;
               });
           },
-          createProfillulusan(){
-            this.form.post(URL+'api/profillulusan');
-            $('#addNew').modal('hide')
+          loadBahankajian(){
+              axios.get(URL+'api/bahankajian').then(data => {
+                  this.bahankajian = data.data.data;
+              });
+          },
+          createKajian(){
+            this.form.post(URL+'api/kajian');
+            $('#addNew')
             Swal.fire({
                 icon: 'success',
                 title: 'Your work has been saved',
@@ -164,7 +184,10 @@
           }
         },
         created() {
-            this.loadProfillulusan();
+            this.loadKajian();
+            this.loadDetailprofillulusan();
+            this.loadBahankajian();
         }
     }
 </script>
+

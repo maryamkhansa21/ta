@@ -1,11 +1,10 @@
 <template>
-    <div class="container">
+      <div class="container">
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Penetapan Profil Lulusan</h3>
-
+                <h3 class="card-title">CPL Program Studi</h3>
                 <div class="card-tools">
                      <button class="btn btn-success" @click="newModal">Tambah <i class="fas fa-user-plus fa-fw"></i></button>
                 </div>
@@ -14,27 +13,27 @@
               <div class="card-body table-responsive p-0">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
-                    <tr role="row">
-                      <th>Profil Lulusan</th>
-                      <th>Deskripsi</th>
+                    <tr>
+                      <th>Code</th>
+                      <th>Capaian Pembelajaran Lulusan</th>
+                      <th>Unsur</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="profillulusan in profillulusan" :key="profillulusan.id">
-                      <td>{{profillulusan.profillulusan}}</td>
-                      <td>{{profillulusan.deskripsi}}</td>
-                      <td>
-                          <a href="#" @click="editModal(profillulusan)">
+                    <tr v-for="c in cplprodi" :key="c.id">
+                      <td>{{c.detailprofillulusan.code}}</td>
+                      <td>{{c.detailprofillulusan.detail}}</td>
+                      <td>{{c.unsur}}  
+                        <td>
+                          <a href="#" @click="editModal(c)">
                               <i class="fas fa-edit fa-fw"></i>
                           </a>
                           
-                          <a href="#" @click="deleteProfillulusan(profillulusan.id)">
+                          <a href="#" @click="deleteCplprodi(c.id)">
                               <i class="fas fa-trash fa-fw"></i>
                           </a>
-                      </td>
-                    </tr>
-                    <tr>
+                      </td>    
                     </tr>
                   </tbody>
                 </table>
@@ -50,28 +49,33 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Profil Lulusan</h5>
-                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Profil Lulusan</h5>
+                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah CPL Prodi</h5>
+                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update CPL Prodi</h5>
                 <button type="button" class="close" data-dismiss="modal"
                 aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="editMode ? updateProfillulusan() : createProfillulusan()">
+            <form @submit.prevent="editMode ? updateCplprodi() : createCplprodi()">
             <div class="modal-body">
                <div class="form-group">
-                <input v-model="form.profillulusan" type="text" name="profillulusan"
-                    placeholder="Profil Lulusan"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('profillulusan') }">
-                <has-error :form="form" field="profillulusan"></has-error>
+                     <select name="code_id" v-model="form.code_id" id="code" class="form-control" :class="{ 'is-invalid': form.errors.has('code_id') }">
+                        <option v-for="code in detailprofillulusan" :key="code.id" v-bind:value="code.id">{{ code.detail }}</option>
+                    </select>
+                <has-error :form="form" field="code"></has-error>
                 </div>
 
+            
+
                  <div class="form-group">
-                <input v-model="form.deskripsi" type="text" name="deskripsi"
-                    placeholder="Deskripsi"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('deskripsi') }">
-                <has-error :form="form" field="deskripsi"></has-error>
-                </div>
+                     <select name="unsur" v-model="form.unsur" id="unsur" class="form-control" :class="{ 'is-invalid': form.errors.has('unsur') }">
+                            <option value="sikap">Sikap</option>
+                            <option value="pengetahuan">Pengetahuan</option>
+                            <option value="keterampilan umum">Keterampilan Umum</option>
+                            <option value="keterampilan Khusus">Keterampilan Khusus</option>
+                        </select>
+                        <has-error :form="form" field="unsur"></has-error>
+                  </div> 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -91,16 +95,17 @@
         data () {
             return {
                 editMode: false,
-                profillulusan : [],
-                form:new Form({
-                    profillulusan :'',
-                    deskripsi:''
+                detailprofillulusan : [],
+                cplprodi : [],
+                  form:new Form({
+                    code_id :'',
+                    unsur :''
                 })
             }
         },
-        methods:{
-           updateProfillulusan(){
-                this.form.put(URL+'api/profillulusan'+this.form.id);
+       methods:{
+         updateCplprodi(){
+                this.form.put(URL+'api/cplprodi'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -111,18 +116,18 @@
                          Fire.$emit('AfterCreate');
                 
             },
-            editModal(profillulusan){
+            editModal(cplprodi){
                 this.editMode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(profillulusan);
+                this.form.fill(cplprodi);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-           deleteProfillulusan(id){
+           deleteCplprodi(id){
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -134,7 +139,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete(URL+'api/profillulusan/'+id).then(()=>{
+                                this.form.delete(URL+'api/cplprodi/'+id).then(()=>{
                                         Swal.fire(
                                         'Deleted!',
                                         'Your file has been deleted.',
@@ -147,14 +152,20 @@
                          }
                     })
             },
-          loadProfillulusan(){
-              axios.get(URL+'api/profillulusan').then(data => {
-                  this.profillulusan = data.data.data;
+         loadCplprodi(){
+              axios.get(URL+'api/cplprodi').then(data => {
+                  this.cplprodi = data.data.data;
+                  console.log(data);
+              });
+         },
+          loadDetailprofillulusan(){
+              axios.get(URL+'api/detailprofillulusan').then(data => {
+                  this.detailprofillulusan = data.data.data;
               });
           },
-          createProfillulusan(){
-            this.form.post(URL+'api/profillulusan');
-            $('#addNew').modal('hide')
+          createCplprodi(){
+            this.form.post(URL+'api/cplprodi');
+            $('#addNew')
             Swal.fire({
                 icon: 'success',
                 title: 'Your work has been saved',
@@ -164,7 +175,8 @@
           }
         },
         created() {
-            this.loadProfillulusan();
+            this.loadCplprodi();
+            this.loadDetailprofillulusan();
         }
     }
 </script>

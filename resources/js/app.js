@@ -2,13 +2,26 @@
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
- */                                                                                    
+ */
+
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-import { Form, HasError, AlertError } from 'vform';
+import swal from 'sweetalert2'
+window.swal = swal;
 
-window.Form - Form;
+import { Form, HasError, AlertError } from 'vform';
+import Dashboard from "./components/Dashboard";
+import Profillulusan from "./components/Profillulusan";
+import Detailprofillulusan from "./components/Detailprofillulusan";
+import Cplprodi from "./components/Cplprodi";
+import Rumuscpl from "./components/Rumuscpl";
+import Kesepadananku from "./components/Kesepadananku";
+import Bahankajian from "./components/Bahankajian";
+import Kajian from "./components/Kajian";
+
+window.Form = Form;
+
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
@@ -16,15 +29,34 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+import Swal from 'sweetalert2'
+window.Swal = Swal
+
+const toast = swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+window.toast = toast;
+
 let routes = [
-    { path: 'dashboard', component: require('./components/Dashboard.vue').default },
-    { path: 'profillulusan', component: require('./components/Profillulusan.vue') }
+    { path: '/home/dashboard', component: Dashboard },
+    { path: '/home/profillulusan', component: Profillulusan },
+    { path: '/home/detailprofillulusan', component: Detailprofillulusan },
+    { path: '/home/cplprodi', component: Cplprodi },
+    { path: '/home/rumuscpl', component: Rumuscpl },
+    { path: '/home/kesepadananku', component: Kesepadananku },
+    { path: '/home/bahankajian', component: Bahankajian },
+    { path: '/home/kajian', component: Kajian }
   ]
 
 const router = new VueRouter({
-
+    mode : 'history',
     routes // short for `routes: routes`
   })
+  window.Fire =  new Vue();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

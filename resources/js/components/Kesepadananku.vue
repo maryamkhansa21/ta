@@ -4,7 +4,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Penetapan Profil Lulusan</h3>
+                <h3 class="card-title">Kesepadanan Keterampilan Umum SN Dikti dengan Program Studi</h3>
 
                 <div class="card-tools">
                      <button class="btn btn-success" @click="newModal">Tambah <i class="fas fa-user-plus fa-fw"></i></button>
@@ -15,21 +15,23 @@
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr role="row">
-                      <th>Profil Lulusan</th>
-                      <th>Deskripsi</th>
+                      <th>Code</th>
+                      <th>Keterampilan Umum SN Dikti</th>
+                      <th>Keterampilan Umum Prodi</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="profillulusan in profillulusan" :key="profillulusan.id">
-                      <td>{{profillulusan.profillulusan}}</td>
-                      <td>{{profillulusan.deskripsi}}</td>
+                      <tr v-for="kesepadananku in kesepadananku" :key="kesepadananku.id">
+                      <td>{{kesepadananku.code}}</td>
+                      <td>{{kesepadananku.kudikti}}</td>
+                      <td>{{kesepadananku.kuprodi}}</td>
                       <td>
-                          <a href="#" @click="editModal(profillulusan)">
+                          <a href="#" @click="editModal(kesepadananku)">
                               <i class="fas fa-edit fa-fw"></i>
                           </a>
                           
-                          <a href="#" @click="deleteProfillulusan(profillulusan.id)">
+                          <a href="#" @click="deleteKesepadananku(kesepadananku.id)">
                               <i class="fas fa-trash fa-fw"></i>
                           </a>
                       </td>
@@ -50,27 +52,34 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Profil Lulusan</h5>
-                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Profil Lulusan</h5>
+                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Kesepadanan Keterampilan Umum</h5>
+                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Kesepadanan Keterampilan Umum</h5>
                 <button type="button" class="close" data-dismiss="modal"
                 aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="editMode ? updateProfillulusan() : createProfillulusan()">
+            <form @submit.prevent="editMode ? updateKesepadananku() : createKesepadananku()">
             <div class="modal-body">
                <div class="form-group">
-                <input v-model="form.profillulusan" type="text" name="profillulusan"
-                    placeholder="Profil Lulusan"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('profillulusan') }">
-                <has-error :form="form" field="profillulusan"></has-error>
+                <input v-model="form.code" type="text" name="code"
+                    placeholder="Code"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('code') }">
+                <has-error :form="form" field="code"></has-error>
+                </div>
+
+                <div class="form-group">
+                <input v-model="form.kudikti" type="text" name="kudikti"
+                    placeholder="Keterampilan Umum DIKTI"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('kudikti') }">
+                <has-error :form="form" field="kudikti"></has-error>
                 </div>
 
                  <div class="form-group">
-                <input v-model="form.deskripsi" type="text" name="deskripsi"
-                    placeholder="Deskripsi"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('deskripsi') }">
-                <has-error :form="form" field="deskripsi"></has-error>
+                <input v-model="form.kuprodi" type="text" name="kuprodi"
+                    placeholder="Keterampilan Umum PRODI"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('kuprodi') }">
+                <has-error :form="form" field="kuprodi"></has-error>
                 </div>
             </div>
             <div class="modal-footer">
@@ -91,16 +100,17 @@
         data () {
             return {
                 editMode: false,
-                profillulusan : [],
+                kesepadananku : [],
                 form:new Form({
-                    profillulusan :'',
-                    deskripsi:''
+                    code :'',
+                    kudikti:'',
+                    kuprodi:''
                 })
             }
         },
         methods:{
-           updateProfillulusan(){
-                this.form.put(URL+'api/profillulusan'+this.form.id);
+           updateKesepadananku(){
+                this.form.put(URL+'api/kesepadananku'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -111,18 +121,18 @@
                          Fire.$emit('AfterCreate');
                 
             },
-            editModal(profillulusan){
+            editModal(kesepadananku){
                 this.editMode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(profillulusan);
+                this.form.fill(kesepadananku);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-           deleteProfillulusan(id){
+           deleteKesepadananku(id){
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -134,7 +144,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete(URL+'api/profillulusan/'+id).then(()=>{
+                                this.form.delete(URL+'api/kesepadananku/'+id).then(()=>{
                                         Swal.fire(
                                         'Deleted!',
                                         'Your file has been deleted.',
@@ -147,13 +157,18 @@
                          }
                     })
             },
-          loadProfillulusan(){
-              axios.get(URL+'api/profillulusan').then(data => {
-                  this.profillulusan = data.data.data;
+          loadKesepadananku(){
+              axios.get(URL+'api/kesepadananku').then(data => {
+                  this.kesepadananku = data.data.data;
               });
           },
-          createProfillulusan(){
-            this.form.post(URL+'api/profillulusan');
+          loadprofillulusan(){
+              axios.get(URL+'api/kesepadananku').then(data => {
+                  this.kesepadananku = data.data.data;
+              });
+          },
+          createKesepadananku(){
+            this.form.post(URL+'api/kesepadananku');
             $('#addNew').modal('hide')
             Swal.fire({
                 icon: 'success',
@@ -164,7 +179,8 @@
           }
         },
         created() {
-            this.loadProfillulusan();
+            this.loadKesepadananku();
         }
     }
 </script>
+
