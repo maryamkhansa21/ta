@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Profillulusan as ModelsProfillulusan;
+use App\Models\Profillulusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +16,7 @@ class ProfillulusanController extends Controller
      */
     public function index()
     {
-        return ModelsProfillulusan::latest()->paginate(10);
+        return Profillulusan::latest()->paginate(10);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProfillulusanController extends Controller
             'profillulusan' => ['required', 'string', 'max:255'],
             'deskripsi' => ['required', 'string', 'max:1000'],
         ]);
-        return ModelsProfillulusan::create([
+        return Profillulusan::create([
             'profillulusan' => $request['profillulusan'],
             'deskripsi' => $request['deskripsi']
 
@@ -47,7 +47,7 @@ class ProfillulusanController extends Controller
      */
     public function show($id)
     {
-        $profillulusan = ModelsProfillulusan::find($id);
+        $profillulusan = Profillulusan::find($id);
         return ['message' => $profillulusan];
     }
 
@@ -58,13 +58,13 @@ class ProfillulusanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsProfilLulusan $modelProfilLulusan)
+    public function update(Request $request, ProfilLulusan $modelProfilLulusan)
     {
-        dd($modelProfilLulusan);
-        $this->validate($request, [
-            'profillulusan' => ['required', 'string', 'max:255'],
-            'deskripsi' => ['required', 'string', 'max:1000'],
-        ]);
+        
+        //$this->validate($request, [
+            //'profillulusan' => ['required', 'string', 'max:255'],
+            //'deskripsi' => ['required', 'string', 'max:1000'],
+        //]);
 
         $modelProfilLulusan->update($request->all());
         return ['message' => 'Profillulusan Update'];
@@ -78,7 +78,7 @@ class ProfillulusanController extends Controller
      */
     public function destroy($id)
     {
-        $profillulusan = ModelsProfillulusan::findOrFail($id);
+        $profillulusan = Profillulusan::findOrFail($id);
         $profillulusan->delete();
         return ['message' => 'Profillulusan Deleted'];
     }
