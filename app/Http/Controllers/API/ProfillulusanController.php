@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Profillulusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class ProfillulusanController extends Controller
 {
@@ -58,16 +59,28 @@ class ProfillulusanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProfilLulusan $modelProfilLulusan)
+    public function update(Request $request, ProfilLulusan $profillulusan)
     {
-        
-        //$this->validate($request, [
-            //'profillulusan' => ['required', 'string', 'max:255'],
-            //'deskripsi' => ['required', 'string', 'max:1000'],
-        //]);
-
-        $modelProfilLulusan->update($request->all());
-        return ['message' => 'Profillulusan Update'];
+        $input = $request->all();
+   
+        $validator = Validator::make($input, [
+            'profillulusan' => 'required',
+            'deskripsi' => 'required'
+        ]);
+   
+        if($validator->fails()){
+            return response()->json([
+                'error' => $validator->errors() 
+                ]);      
+        }
+   
+        $profillulusan->profillulusan = $input['profillulusan'];
+        $profillulusan->deskripsi = $input['deskripsi'];
+        $profillulusan->save();
+   
+        return response()->json([
+            'data' => $profillulusan
+            ]);
     }
 
     /**
