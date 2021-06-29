@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kesepadananku as ModelsKesepadananku;
+use App\Models\Detailprofillulusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +17,7 @@ class KesepadanankuController extends Controller
      */
     public function index()
     {
-        return ModelsKesepadananku::latest()->paginate(10);
+        return ModelsKesepadananku::latest()->with('detailprofillulusan', 'dashboard')->paginate(10)->toJson();
     }
 
     /**
@@ -28,16 +29,18 @@ class KesepadanankuController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code' => ['required', 'string', 'max:255'],
-            'kudikti' => ['required', 'string', 'max:1000'],
             'kuprodi' => ['required', 'string', 'max:1000'],
         ]);
         return ModelsKesepadananku::create([
-            'code' => $request['code'],
-            'kudikti' => $request['kudikti'],
             'kuprodi' => $request['kuprodi']
 
         ]);
+        $kesepadananku = new ModelsKesepadananku();
+
+        $kesepadananku->save();
+
+        $details = Detailprofillulusan::find($request['details']);
+        $kesepadananku->detailprofillulusan()->attach($details);
     }
 
 
@@ -64,8 +67,6 @@ class KesepadanankuController extends Controller
     {
         $kesepadananku = ModelsKesepadananku::findOrFail($id);
         $this->validate($request, [
-            'code' => ['required', 'string', 'max:255'],
-            'kudikti' => ['required', 'string', 'max:1000'],
             'kuprodi' => ['required', 'string', 'max:1000'],
         ]);
         $kesepadananku->update($request->all());

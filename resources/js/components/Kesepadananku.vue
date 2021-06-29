@@ -5,35 +5,31 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Kesepadanan Keterampilan Umum SN Dikti dengan Program Studi</h3>
-
-                <div class="card-tools">
-                     <button class="btn btn-success" @click="newModal">Tambah <i class="fas fa-user-plus fa-fw"></i></button>
-                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr role="row">
-                      <th>Code</th>
                       <th>Keterampilan Umum SN Dikti</th>
                       <th>Keterampilan Umum Prodi</th>
-                      <th>Modify</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                       <tr v-for="kesepadananku in kesepadananku" :key="kesepadananku.id">
-                      <td>{{kesepadananku.code}}</td>
-                      <td>{{kesepadananku.kudikti}}</td>
-                      <td>{{kesepadananku.kuprodi}}</td>
+                      <td>{{kesepadananku.dashboard.kudikti}}</td>
+                       <td>
+                          <multiselect style="z-index : 2;position : relative;" v-model="kesepadananku.detailprofillulusan" placeholder="Pilih KU Prodi" label="detail" track-by="id" :options="detailprofillulusan" :multiple="true" @input="updateDprofillulusan"></multiselect>
+                      </td>
                       <td>
-                          <a href="#" @click="editModal(kesepadananku)">
-                              <i class="fas fa-edit fa-fw"></i>
-                          </a>
-                          
-                          <a href="#" @click="deleteKesepadananku(kesepadananku.id)">
-                              <i class="fas fa-trash fa-fw"></i>
-                          </a>
+                           <form @submit.prevent="updateDashboard(kuprodi)">
+                        <div class="row">
+                          <div class="col-12">
+                            <input type="submit" value="Simpan" class="btn btn-success float-right">
+                          </div>
+                        </div>
+                        </form>
                       </td>
                     </tr>
                     <tr>
@@ -46,70 +42,40 @@
             <!-- /.card -->
           </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="addNew" tabindex="-1"  role="dialog"
-        aria-labelledby="addNewLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Kesepadanan Keterampilan Umum</h5>
-                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Kesepadanan Keterampilan Umum</h5>
-                <button type="button" class="close" data-dismiss="modal"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form @submit.prevent="editMode ? updateKesepadananku() : createKesepadananku()">
-            <div class="modal-body">
-               <div class="form-group">
-                <input v-model="form.code" type="text" name="code"
-                    placeholder="Code"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('code') }">
-                <has-error :form="form" field="code"></has-error>
-                </div>
-
-                <div class="form-group">
-                <input v-model="form.kudikti" type="text" name="kudikti"
-                    placeholder="Keterampilan Umum DIKTI"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('kudikti') }">
-                <has-error :form="form" field="kudikti"></has-error>
-                </div>
-
-                 <div class="form-group">
-                <input v-model="form.kuprodi" type="text" name="kuprodi"
-                    placeholder="Keterampilan Umum PRODI"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('kuprodi') }">
-                <has-error :form="form" field="kuprodi"></has-error>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
-                <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
-            </div>
-            </form>
-            </div>
-        </div>
-        </div>
     </div>
 </template>
 
 <script>
     const URL = "http://localhost:8000/";
+    import Multiselect from 'vue-multiselect';
     export default {
+      components: {
+            Multiselect
+        },
         data () {
             return {
                 editMode: false,
+                detailprofillulusan : [],
+                dashboard : [],
                 kesepadananku : [],
                 form:new Form({
-                    code :'',
-                    kudikti:'',
                     kuprodi:''
-                })
+                }),
+                detailsById : [],
             }
         },
         methods:{
+          updateDetail(details) {
+               let detailsById = [];
+
+               details.forEach((detail) => {
+                   detailsById.push(detail.id);
+               });
+
+               this.detailsById = detailsById;
+           },
            updateKesepadananku(){
+                this.form.details = this.detailsById;
                 this.form.put(URL+'api/kesepadananku'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
@@ -128,6 +94,7 @@
                 this.form.fill(kesepadananku);
             },
             newModal(){
+                this.detailsById = [];
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
@@ -162,12 +129,17 @@
                   this.kesepadananku = data.data.data;
               });
           },
-          loadprofillulusan(){
-              axios.get(URL+'api/kesepadananku').then(data => {
-                  this.kesepadananku = data.data.data;
+          loadDetailprofillulusan(){
+              axios.get(URL+'api/detailprofillulusan').then(data => {
+                  this.detailprofillulusan = data.data.data;
               });
           },
           createKesepadananku(){
+            this.form.details = this.detailsById;
+            this.form.post(URL+'api/kesepadananku');
+
+              this.detailsById = [];
+              this.detailsById = [];
             this.form.post(URL+'api/kesepadananku');
             $('#addNew').modal('hide')
             Swal.fire({
@@ -180,7 +152,9 @@
         },
         created() {
             this.loadKesepadananku();
+            this.loadDetailprofillulusan();
         }
     }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 

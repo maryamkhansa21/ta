@@ -30,7 +30,7 @@
                           <a href="#" @click="editModal(detailprofillulusan)">
                               <i class="fas fa-edit fa-fw"></i>
                           </a>
-                          
+
                           <a href="#" @click="deleteDetailprofillulusan(detailprofillulusan.id)">
                               <i class="fas fa-trash fa-fw"></i>
                           </a>
@@ -105,7 +105,8 @@
                 form:new Form({
                     code :'',
                     detail:'',
-                    profil_id:''
+                    profil_id:'',
+                    unsur: 0
                 })
             }
         },
@@ -118,9 +119,9 @@
                         'Information has been updated.',
                         'success'
                         )
-                    
+
                          Fire.$emit('AfterCreate');
-                
+
             },
             editModal(detailprofillulusan){
                 this.editMode = true;

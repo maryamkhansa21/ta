@@ -16,7 +16,7 @@ class BahankajianController extends Controller
      */
     public function index()
     {
-        return ModelsBahankajian::latest()->paginate(10);
+        return ModelsBahankajian::latest()->paginate(200);
     }
 
     /**

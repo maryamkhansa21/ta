@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bahankajian;
+use App\Models\Detailprofillulusan;
+use App\Models\Kajian;
 use App\Models\Kajian as ModelsKajian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +19,7 @@ class KajianController extends Controller
      */
     public function index()
     {
-        return ModelsKajian::latest()->with('detailprofillulusan')->paginate(10);
-        return ModelsKajian::latest()->with('bahankajian')->paginate(10);
+        return ModelsKajian::latest()->with('detailprofillulusan', 'bahankajian')->paginate(1)->toJson();
     }
 
     /**
@@ -29,16 +31,21 @@ class KajianController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'detail_id' => ['required'],
-            'bahankajian_id' => ['required'],
+            'details' => ['required'],
+            'bahankajians' => ['required'],
             'matkul' => ['required', 'string', 'max:255'],
         ]);
-        return ModelsKajian::create([
-            'detail_id' => $request['detail_id'],
-            'bahankajian_id' => $request['bahankajian_id'],
-            'matkul' => $request['matkul']
+        $kajian = new ModelsKajian();
+        $kajian->matkul = $request['matkul'];
 
-        ]);
+        $kajian->save();
+
+        $bahankajians = Bahankajian::find($request['bahankajians']);
+        $details = Detailprofillulusan::find($request['details']);
+        $kajian->bahankajian()->attach($bahankajians);
+        $kajian->detailprofillulusan()->attach($details);
+
+        return 'Kajian sukses dibuat!';
     }
 
 
@@ -65,11 +72,14 @@ class KajianController extends Controller
     {
         $kajian = ModelsKajian::findOrFail($id);
         $this->validate($request, [
-            'detail_id' => ['required'],
-            'bahankajian_id' => ['required'],
+            'details' => ['required'],
+            'bahankajians' => ['required'],
             'matkul' => ['required', 'string', 'max:255'],
         ]);
-        $kajian->update($request->all());
+        $kajian->matkul = $request->matkul;
+        $kajian->detailprofillulusan()->sync($request['details']);
+        $kajian->bahankajian()->sync($request['bahankajians']);
+        $kajian->save();
         return ['message' => 'Penetapan Mata Kulian Update'];
     }
 
@@ -84,5 +94,14 @@ class KajianController extends Controller
         $kajian = ModelsKajian::findOrFail($id);
         $kajian->delete();
         return ['message' => 'Penetapan Mata Kulian Deleted'];
+    }
+    public function testmultipleupdate(Request $request)
+    {
+        $input = $request->all();
+        $data_array = $request['data_array'];
+        // $request['data_array'] = implode(',', $data_array);
+
+        // User::create($input);
+        return $data_array;
     }
 }

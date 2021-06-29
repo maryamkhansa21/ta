@@ -42,6 +42,6 @@ class Bahankajian extends Authenticatable
     //];
     public function kajian()
     {
-        return $this->hasOne(Kajian::class);
+        return $this->hasMany(Kajian::class, 'bahankajian_kajian');
     }
 }

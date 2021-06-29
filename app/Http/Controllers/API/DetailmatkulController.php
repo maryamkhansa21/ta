@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cplprodi as ModelsCplprodi;
-use App\Models\Detailprofillulusan as ModelsDetailprofillulusan;
+use App\Models\Detailmatkul as ModelsDetailmatkul;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class CplprodiController extends Controller
+class DetailmatkulController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +16,7 @@ class CplprodiController extends Controller
      */
     public function index()
     {
-        return ModelsCplprodi::latest()->with('detailprofillulusan')->paginate(10);
+        return ModelsDetailmatkul::get()->with('kajian')->paginate(10);
     }
 
     /**
@@ -29,10 +28,12 @@ class CplprodiController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'unsur' => ['required'],
+            'matkul_id' => ['required'],
+            'dtlmatkul' => ['required', 'string', 'max:1000'],
         ]);
-        return ModelsCplprodi::create([
-            'unsur' => $request['unsur'],
+        return ModelsDetailmatkul::create([
+            'matkul_id' => $request['matkul_id'],
+            'dtlmatkul' => $request['dtlmatkul']
 
         ]);
     }
@@ -45,8 +46,8 @@ class CplprodiController extends Controller
      */
     public function show($id)
     {
-        $cplprodi = ModelsCplprodi::find($id);
-        return ['message' => $cplprodi];
+        $detailmatkul = ModelsDetailmatkul::find($id);
+        return ['message' => $detailmatkul];
     }
 
     /**
@@ -58,12 +59,13 @@ class CplprodiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $detailprofillulusan = ModelsDetailprofillulusan::findOrFail($id);
+        $detailmatkul = ModelsDetailmatkul::findOrFail($id);
         $this->validate($request, [
-            'unsur' => ['required'],
+            'matkul_id' => ['required'],
+            'dtlmatkul' => ['required', 'string', 'max:1000'],
         ]);
-        $detailprofillulusan->update($request->all());
-        return ['message' => 'CPL Update'];
+        $detailmatkul->update($request->all());
+        return ['message' => 'Detail Mata Kuliah Update'];
     }
 
     /**
@@ -74,5 +76,8 @@ class CplprodiController extends Controller
      */
     public function destroy($id)
     {
+        $detailmatkul = ModelsDetailmatkul::findOrFail($id);
+        $detailmatkul->delete();
+        return ['message' => 'Detail Mata Kuliah Deleted'];
     }
 }

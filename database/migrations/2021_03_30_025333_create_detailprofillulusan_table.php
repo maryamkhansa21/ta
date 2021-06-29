@@ -19,6 +19,7 @@ class CreateDetailprofillulusanTable extends Migration
             $table->text('detail');
             $table->bigInteger('profil_id')->unsigned();
             $table->foreign('profil_id')->references('id')->on('profillulusan')->onDelete('cascade');
+            $table->string('unsur')->nullable();
             $table->timestamps();
         });
     }

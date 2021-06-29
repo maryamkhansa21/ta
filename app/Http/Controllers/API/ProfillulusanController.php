@@ -15,9 +15,11 @@ class ProfillulusanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return Profillulusan::latest()->paginate(10);
+        return Profillulusan::latest()->paginate(100);
+        
     }
 
     /**
@@ -62,25 +64,25 @@ class ProfillulusanController extends Controller
     public function update(Request $request, ProfilLulusan $profillulusan)
     {
         $input = $request->all();
-   
+
         $validator = Validator::make($input, [
             'profillulusan' => 'required',
             'deskripsi' => 'required'
         ]);
-   
-        if($validator->fails()){
+
+        if ($validator->fails()) {
             return response()->json([
-                'error' => $validator->errors() 
-                ]);      
+                'error' => $validator->errors()
+            ]);
         }
-   
+
         $profillulusan->profillulusan = $input['profillulusan'];
         $profillulusan->deskripsi = $input['deskripsi'];
         $profillulusan->save();
-   
+
         return response()->json([
             'data' => $profillulusan
-            ]);
+        ]);
     }
 
     /**

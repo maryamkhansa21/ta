@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Detailprofillulusan as ModelsDetailprofillulusan;
+use Database\Seeders\DetailprofillulusanSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,7 +17,9 @@ class DetailprofillulusanController extends Controller
      */
     public function index()
     {
-        return ModelsDetailprofillulusan::latest()->with('profillulusan')->paginate(10);
+        return ModelsDetailprofillulusan::latest()->with('profillulusan')->paginate(100);
+        //$detailprofillulusan = ModelsDetailprofillulusan::orderBy('created_at', 'ASC')->get();
+        //return view('detailprofillulusan', compact('detailprofillulusan'));
     }
 
     /**
@@ -31,11 +34,13 @@ class DetailprofillulusanController extends Controller
             'code' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string', 'max:1000'],
             'profil_id' => ['required'],
+            'unsur' => ['required'],
         ]);
         return ModelsDetailprofillulusan::create([
             'code' => $request['code'],
             'detail' => $request['detail'],
-            'profil_id' => $request['profil_id']
+            'profil_id' => $request['profil_id'],
+            'unsur' => $request['unsur']
 
         ]);
     }
@@ -67,6 +72,7 @@ class DetailprofillulusanController extends Controller
             'code' => ['required', 'string', 'max:255'],
             'detail' => ['required', 'string', 'max:1000'],
             'profil_id' => ['required'],
+            'unsur' => ['required'],
         ]);
         $detailprofillulusan->update($request->all());
         return ['message' => 'Detail Profil Lulusan Update'];
@@ -83,5 +89,14 @@ class DetailprofillulusanController extends Controller
         $detailprofillulusan = ModelsDetailprofillulusan::findOrFail($id);
         $detailprofillulusan->delete();
         return ['message' => 'Detail Profil Lulusan Deleted'];
+    }
+
+    public function updateUnsur($id)
+    {
+        $unsur = explode(',', $id);
+        $ids = [];
+        foreach ($unsur as $id) {
+            ModelsDetailprofillulusan::findOrFail($id)->delete();
+        }
     }
 }

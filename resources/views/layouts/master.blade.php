@@ -105,13 +105,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item">
-                            <router-link to="/home/rumuscpl" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>Merumuskan CPL</p>
-                            </router-link>
-                        </li>
-
-                        <li class="nav-item">
                             <router-link to="/home/kesepadananku" class="nav-link">
                                 <i class="nav-icon fas fa-clone"></i>
                                 <p>Kesepadanan KU</p>
@@ -127,14 +120,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                         <li class="nav-item">
                             <router-link to="/home/kajian" class="nav-link">
-                                <i class="nav-icon fas fa-folder"></i>
+                                <i class="nav-icon fas fa-check"></i>
                                 <p>Penetapan Mata Kuliah</p>
                             </router-link>
                         </li>
 
                         <li class="nav-item">
+                            <router-link to="/home/matkul" class="nav-link">
+                                <i class="nav-icon fas fa-bars"></i>
+                                <p>Daftar Mata Kuliah</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/detailmatkul" class="nav-link">
+                                <i class="nav-icon fas fa-tasks"></i>
+                                <p>Detail Mata Kuliah</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/pembentukanmatkul" class="nav-link">
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>Pembentukan Mata Kuliah</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
+                            <router-link to="/home/distribusimatkul" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Distribusi Mata Kuliah</p>
+                            </router-link>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                   document.getElementById('logout-form').submit();" class="nav-link">
+                            document.getElementById('logout-form').submit();" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt red"></i>
                                 <p>Logout</p>
                             </a>

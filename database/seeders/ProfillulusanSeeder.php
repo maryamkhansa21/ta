@@ -16,6 +16,7 @@ class ProfillulusanSeeder extends Seeder
     {
         \App\Models\Profillulusan::insert([
             [
+                'id' => 1,
                 'profillulusan' => "Data Scientist",
                 'deskripsi' => 'Data Scientist mampu menganalisis dan menginterpretasikan data dalam jumlah sangat besar, baik
                 terstruktur dan tidak terstruktur, untuk mendeskripsikan data, memetakan similaritas data dan 
@@ -27,6 +28,7 @@ class ProfillulusanSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
+                'id' => 2,
                 'profillulusan' => "Data Analyst",
                 'deskripsi' => 'Data Analyst mengumpulkan data dari berbagai sumber data, mengatur data secara efektif untuk
                 memahami pola dan hubungan data, mengubah data menjadi bentuk yang efektif untuk menganalisis
@@ -38,6 +40,7 @@ class ProfillulusanSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
+                'id' => 3,
                 'profillulusan' => "Data Engineer",
                 'deskripsi' => 'Data Engineer mampu mengembangkan, membangun, menguji dan memelihara arsitektur untuk basis 
                 data dan sistem pemrosesan skala besar, menyiapkan infrastruktur big data, mengintegrasikan data 

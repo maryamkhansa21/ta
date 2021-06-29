@@ -15,8 +15,6 @@ class CreateCplprodiTable extends Migration
     {
         Schema::create('cplprodi', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('code_id')->unsigned();
-            $table->foreign('code_id')->references('id')->on('detailprofillulusan')->onDelete('cascade');
             $table->string('unsur');
             $table->timestamps();
         });

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKajianTable extends Migration
+class CreatePenetapanmatkulTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateKajianTable extends Migration
      */
     public function up()
     {
-        Schema::create('kajian', function (Blueprint $table) {
+        Schema::create('penetapanmatkul', function (Blueprint $table) {
             $table->id();
-            $table->string('matkul');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ class CreateKajianTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kajian');
+        Schema::dropIfExists('penetapanmatkul');
     }
 }

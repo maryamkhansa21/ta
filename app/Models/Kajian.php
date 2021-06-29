@@ -43,10 +43,18 @@ class Kajian extends Authenticatable
     //];
     public function detailprofillulusan()
     {
-        return $this->belongsTo(Detailprofillulusan::class, 'detail_id');
+        return $this->belongsToMany(Detailprofillulusan::class, 'detailprofillulusan_kajian');
     }
     public function bahankajian()
     {
-        return $this->belongsTo(Bahankajian::class, 'bahankajian_id');
+        return $this->belongsToMany(Bahankajian::class, 'bahankajian_kajian');
+    }
+    public function matkul()
+    {
+        return $this->hasOne(Matkul::class, 'matkul_id', 'id');
+    }
+    public function detailmatkul()
+    {
+        return $this->hasOne(Detailmatkul::class, 'matkul_id', 'id');
     }
 }

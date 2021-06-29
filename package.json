@@ -26,9 +26,12 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
+        "@vue/composition-api": "*",
         "admin-lte": "^3.1.0-rc",
+        "laravel-vue-pagination": "^2.3.1",
         "sweetalert2": "^10.15.6",
         "vform": "^1.0.1",
+        "vue-multiselect": "^2.1.6",
         "vue-router": "^3.5.1"
     }
 }

@@ -20,6 +20,7 @@ class Dashboard extends Authenticatable
     protected $fillable = [
         'programstudi',
         'jenjang',
+        'kudikti',
     ];
 
     /**
@@ -40,4 +41,8 @@ class Dashboard extends Authenticatable
     //protected $casts = [
     //'email_verified_at' => 'datetime',
     //];
+    public function kesepadananku()
+    {
+        return $this->hasOne(Kesepadananku::class);
+    }
 }

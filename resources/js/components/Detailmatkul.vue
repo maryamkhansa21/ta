@@ -4,7 +4,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Pemilihan Bahan Kajian</h3>
+                <h3 class="card-title">Detail Mata Kuliah</h3>
 
                 <div class="card-tools">
                      <button class="btn btn-success" @click="newModal">Tambah <i class="fas fa-user-plus fa-fw"></i></button>
@@ -15,21 +15,21 @@
                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
                   <thead>
                     <tr role="row">
-                      <th>Rumpun Keilmuan</th>
-                      <th>Bahan Kajian</th>
+                      <th>Mata Kuliah</th>
+                      <th>Detail Mata Kuliah</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-                      <tr v-for="bahankajian in bahankajian" :key="bahankajian.id">
-                      <td>{{bahankajian.rumpunkeilmuan}}</td>
-                      <td>{{bahankajian.bahankajian}}</td>
+                      <tr v-for="detailmatkul in detailmatkul" :key="detailmatkul.id">
+                      <td>{{detailmatkul.kajian.matkul}}</td>
+                      <td>{{detailmatkul.dtlmatkul}}</td>
                       <td>
-                          <a href="#" @click="editModal(bahankajian)">
+                          <a href="#" @click="editModal(detailmatkul)">
                               <i class="fas fa-edit fa-fw"></i>
                           </a>
 
-                          <a href="#" @click="deleteBahankajian(bahankajian.id)">
+                          <a href="#" @click="deleteDetailmatkul(detailmatkul.id)">
                               <i class="fas fa-trash fa-fw"></i>
                           </a>
                       </td>
@@ -50,30 +50,28 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
             <div class="modal-header">
-                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Bahan Kajian</h5>
-                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Bahan Kajian</h5>
+                 <h5 class="modal-title" v-show="!editMode" id="addNewLabel">Tambah Detail Mata Kuliah</h5>
+                 <h5 class="modal-title" v-show="editMode" id="addNewLabel">Update Detail Mata Kuliah</h5>
                 <button type="button" class="close" data-dismiss="modal"
                 aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form @submit.prevent="editMode ? updateBahankajian() : createBahankajian()">
+            <form @submit.prevent="editMode ? updateDetailmatkul() : createDetailmatkul()">
             <div class="modal-body">
-               <div class="form-group">
-                     <select name="rumpunkeilmuan" v-model="form.rumpunkeilmuan" id="rumpunkeilmuan" class="form-control" :class="{ 'is-invalid': form.errors.has('rumpunkeilmuan') }">
-                            <option value="Rumpun Keilmuan Kajian Umum">Rumpun Keilmuan Kajian Umum (KU)</option>
-                            <option value="Rumpun Keilmuan Dasar">Rumpun Keilmuan Dasar (KD)</option>
-                            <option value="Rumpun Keilmuan Iptek Pendukung">Rumpun Keilmuan Iptek Pendukung (KP)</option>
-                            <option value="Rumpun Keilmuan Inti">Rumpun Keilmuan Inti (KI)</option>
-                        </select>
-                        <has-error :form="form" field="unsur"></has-error>
-                  </div>
+
+                 <div class="form-group">
+                     <select name="matkul_id"  placeholder="Mata Kuliah" v-model="form.matkul_id" id="matkul" class="form-control" :class="{ 'is-invalid': form.errors.has('matkul_id') }">
+                        <option v-for="matkul in kajian" :key="matkul.id" v-bind:value="matkul.id">{{ matkul.kajian }}</option>
+                    </select>
+                <has-error :form="form" field="matkul"></has-error>
+                </div>
 
                 <div class="form-group">
-                <input v-model="form.bahankajian" type="text" name="bahankajian"
-                    placeholder="Bahan Kajian"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('bahankajian') }">
-                <has-error :form="form" field="bahankajian"></has-error>
+                <input v-model="form.dtlmatkul" type="text" name="dtlmatkul"
+                    placeholder="Detail Matkul"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('dtlmatkul') }">
+                <has-error :form="form" field="dtlmatkul"></has-error>
                 </div>
             </div>
             <div class="modal-footer">
@@ -94,16 +92,17 @@
         data () {
             return {
                 editMode: false,
-                bahankajian : [],
+                kajian : [],
+                detailmatkul : [],
                 form:new Form({
-                    rumpunkeilmuan :'',
-                    bahankajian:''
+                    matkul_id:'',
+                    dtlmatkul:''
                 })
             }
         },
         methods:{
-           updateBahankajian(){
-                this.form.put(URL+'api/bahankajian'+this.form.id);
+           updateDetailmatkul(){
+                this.form.put(URL+'api/matkul/all'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -114,18 +113,18 @@
                          Fire.$emit('AfterCreate');
 
             },
-            editModal(bahankajian){
+            editModal(detailmatkul){
                 this.editMode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(bahankajian);
+                this.form.fill(detailmatkul);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-           deleteBahankajian(id){
+           deleteDetailmatkul(id){
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -137,7 +136,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete(URL+'api/bahankajian/'+id).then(()=>{
+                                this.form.delete(URL+'api/matkul/all/'+id).then(()=>{
                                         Swal.fire(
                                         'Deleted!',
                                         'Your file has been deleted.',
@@ -150,25 +149,32 @@
                          }
                     })
             },
-          loadBahankajian(){
-              axios.get(URL+'api/bahankajian').then(data => {
-                  this.bahankajian = data.data.data;
+          loadDetailmatkul(){
+              axios.get(URL+'api/matkul/all').then(data => {
+                  this.detailmatkul = data.data.data;
               });
           },
-          createBahankajian(){
-            this.form.post(URL+'api/bahankajian');
+          loadKajian(){
+              axios.get(URL+'api/kajian').then(data => {
+                  this.kajian= data.data.data;
+                  console.log(data);
+              });
+          },
+          createDetailmatkul(){
+            this.form.post(URL+'api/matkul/all');
             $('#addNew').modal('hide')
-            this.loadBahankajian();
             Swal.fire({
                 icon: 'success',
                 title: 'Your work has been saved',
                 showConfirmButton: false,
                 timer: 1500
               })
+              Fire.$emit('AfterCreate')
           }
         },
         created() {
-            this.loadBahankajian();
+            this.loadKajian();
+            this.loadDetailmatkul();
         }
     }
 </script>

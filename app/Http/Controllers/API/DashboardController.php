@@ -16,7 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return ModelsDashboard::latest()->paginate(10);
+        return ModelsDashboard::latest()->paginate(100);
     }
 
     /**
@@ -30,10 +30,12 @@ class DashboardController extends Controller
         $this->validate($request, [
             'programstudi' => ['required', 'string', 'max:255'],
             'jenjang' => ['required', 'string', 'max:255'],
+            'kudikti' => ['required', 'string', 'max:1000'],
         ]);
         return ModelsDashboard::create([
             'programstudi' => $request['programstudi'],
-            'jenjang' => $request['jenjang']
+            'jenjang' => $request['jenjang'],
+            'kudikti' => $request['kudikti']
 
         ]);
     }
@@ -59,7 +61,14 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dashboard = ModelsDashboard::findOrFail($id);
+        $this->validate($request, [
+            'programstudi' => ['required', 'string', 'max:255'],
+            'jenjang' => ['required', 'string', 'max:255'],
+            'kudikti' => ['required', 'string', 'max:1000'],
+        ]);
+        $dashboard->update($request->all());
+        return ['message' => 'Dashboard Update'];
     }
 
     /**
@@ -70,6 +79,8 @@ class DashboardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dashboard = ModelsDashboard::findOrFail($id);
+        $dashboard->delete();
+        return ['message' => 'Dashboard Deleted'];
     }
 }

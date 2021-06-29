@@ -28,3 +28,9 @@ Route::resource('bahankajian', 'App\Http\Controllers\API\BahankajianController')
 Route::resource('cplprodi', 'App\Http\Controllers\API\CplprodiController');
 Route::resource('kesepadananku', 'App\Http\Controllers\API\KesepadanankuController');
 Route::resource('kajian', 'App\Http\Controllers\API\KajianController');
+Route::resource('matkul', 'App\Http\Controllers\API\MatkulController');
+Route::resource('detailmatkul', 'App\Http\Controllers\API\DetailmatkulController');
+Route::resource('pembentukanmatkul', 'App\Http\Controllers\API\PembentukanmatkulController');
+Route::resource('distribusimatkul', 'App\Http\Controllers\API\DistribusimatkulController');
+Route::put('/test/array', 'App\Http\Controllers\API\KajianController@testmultipleupdate');
+Route::get('/matkul/all', 'App\Http\Controllers\API\MatkulController@indexSemuaMatkul');

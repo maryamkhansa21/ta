@@ -21,6 +21,7 @@ class Detailprofillulusan extends Authenticatable
         'code',
         'detail',
         'profil_id',
+        'unsur',
     ];
 
     /**
@@ -51,6 +52,6 @@ class Detailprofillulusan extends Authenticatable
     }
     public function kajian()
     {
-        return $this->hasOne(Kajian::class);
+        return $this->hasMany(Kajian::class, 'bahankajian_kajian');
     }
 }

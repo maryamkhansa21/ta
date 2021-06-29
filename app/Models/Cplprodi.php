@@ -18,8 +18,6 @@ class Cplprodi extends Authenticatable
      */
     protected $table = "cplprodi";
     protected $fillable = [
-        'code_id',
-        'detail_id',
         'unsur',
     ];
 
@@ -43,6 +41,6 @@ class Cplprodi extends Authenticatable
     //];
     public function detailprofillulusan()
     {
-        return $this->belongsTo(Detailprofillulusan::class, 'code_id');
+        return $this->belongsToMany(Detailprofillulusan::class, 'code_id');
     }
 }

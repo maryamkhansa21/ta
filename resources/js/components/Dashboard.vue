@@ -31,10 +31,16 @@
                 </div>
 
               <div class="form-group">
-                <input for="form.jenjang" type="text" name="jenjang"
-                    placeholder="Jenjang"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('jenjang') }" v-model="form.jenjang">
-                <has-error :form="form" field="jenjang"></has-error>
+                <select name="jenjang" v-model="form.jenjang" id="jenjang" class="form-control" :class="{ 'is-invalid': form.errors.has('jenjang') }">
+                            <option value="Diploma 3">Diploma 3</option>
+                            <option value="Sarjana">Sarjana</option>
+                            <option value="Sarjana Terapan">Sarjana Terapan</option>
+                            <option value="Magister">Magister</option>
+                            <option value="Magister Terapan">Magister Terapan</option>
+                            <option value="Doktor">Doktor</option>
+                            <option value="Doktor Terapan">Doktor Terapan</option>
+                        </select>
+                        <has-error :form="form" field="jenjang"></has-error>
                 </div>
             </div>
             <!-- /.card-body -->
@@ -62,12 +68,14 @@
 <script>
     const URL = "http://localhost:8000/";
     export default {
+      props: ['kudikti'],
         data () {
             return {
                 dashboard : [],
                 form:new Form({
                     programstudi :'',
-                    jenjang:''
+                    jenjang:'',
+                    kudikti:'0'
                 })
             }
         },
@@ -75,6 +83,11 @@
          loadDashboard(){
               axios.get(URL+'api/dashboard').then(data => {
                   this.dashboard = data.data.data;
+              });
+          },
+          loadKesepadananku(){
+              axios.get(URL+'api/kesepadananku').then(data => {
+                  this.kesepadananku = data.data.data;
               });
           },
           createDashboard(){
@@ -90,6 +103,7 @@
         },
         created() {
             this.loadDashboard();
+            this.loadKesepadananku();
         }
     }
 </script>

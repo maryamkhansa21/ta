@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Kesepadananku extends Authenticatable
+class Matkul extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -16,9 +16,9 @@ class Kesepadananku extends Authenticatable
      *
      * @var array
      */
-    protected $table = "kesepadananku";
+    protected $table = "matkul";
     protected $fillable = [
-        'kuprodi',
+        'matkul',
     ];
 
     /**
@@ -39,12 +39,8 @@ class Kesepadananku extends Authenticatable
     //protected $casts = [
     //'email_verified_at' => 'datetime',
     //];
-    public function dashboard()
+    public function kajian()
     {
-        return $this->belongsTo(Dashboard::class, 'kudikti');
-    }
-    public function detailprofillulusan()
-    {
-        return $this->belongsToMany(Detailprofillulusan::class, 'detailprofillulusan_kajian');
+        return $this->belongsTo(Kajian::class, 'matkul_id');
     }
 }
