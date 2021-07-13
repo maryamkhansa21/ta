@@ -15,8 +15,8 @@ class CreateKesepadanankuTable extends Migration
     {
         Schema::create('kesepadananku', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('kudikti')->unsigned();
-            $table->foreign('kudikti')->references('id')->on('dashboard')->onDelete('cascade');
+            $table->bigInteger('kudikti_id')->unsigned();
+            $table->foreign('kudikti_id')->references('id')->on('dashboard')->onDelete('cascade');
             $table->text('kuprodi');
             $table->timestamps();
         });

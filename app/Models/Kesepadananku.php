@@ -18,6 +18,7 @@ class Kesepadananku extends Authenticatable
      */
     protected $table = "kesepadananku";
     protected $fillable = [
+        'kudikti_id',
         'kuprodi',
     ];
 

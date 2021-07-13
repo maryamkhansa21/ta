@@ -15,7 +15,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Desain Kurikulum</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

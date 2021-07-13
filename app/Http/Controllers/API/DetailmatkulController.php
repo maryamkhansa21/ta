@@ -16,7 +16,8 @@ class DetailmatkulController extends Controller
      */
     public function index()
     {
-        return ModelsDetailmatkul::get()->with('kajian')->paginate(10);
+        $detailmatkul = ModelsDetailmatkul::orderBy('created_at', 'ASC')->with('kajian')->get();
+        return $detailmatkul;
     }
 
     /**
@@ -33,7 +34,7 @@ class DetailmatkulController extends Controller
         ]);
         return ModelsDetailmatkul::create([
             'matkul_id' => $request['matkul_id'],
-            'dtlmatkul' => $request['dtlmatkul']
+            'dtlmatkul' => $request['dtlmatkul'],
 
         ]);
     }

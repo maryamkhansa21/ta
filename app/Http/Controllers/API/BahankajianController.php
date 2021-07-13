@@ -16,7 +16,8 @@ class BahankajianController extends Controller
      */
     public function index()
     {
-        return ModelsBahankajian::latest()->paginate(200);
+        $bahankajian = ModelsBahankajian::orderBy('created_at', 'ASC')->get();
+        return $bahankajian;
     }
 
     /**

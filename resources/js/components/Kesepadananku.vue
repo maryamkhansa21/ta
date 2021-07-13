@@ -20,10 +20,10 @@
                       <tr v-for="kesepadananku in kesepadananku" :key="kesepadananku.id">
                       <td>{{kesepadananku.dashboard.kudikti}}</td>
                        <td>
-                          <multiselect style="z-index : 2;position : relative;" v-model="kesepadananku.detailprofillulusan" placeholder="Pilih KU Prodi" label="detail" track-by="id" :options="detailprofillulusan" :multiple="true" @input="updateDprofillulusan"></multiselect>
+                          <multiselect style="z-index : 2;position : relative;" v-model="kesepadananku.detailprofillulusan.detail" placeholder="Pilih KU Prodi" label="detail" track-by="id" :options="detailprofillulusan" :multiple="true" @input="updateDprofillulusan"></multiselect>
                       </td>
                       <td>
-                           <form @submit.prevent="updateDashboard(kuprodi)">
+                           <form @submit.prevent="updateKesepadananku(kesepadananku)">
                         <div class="row">
                           <div class="col-12">
                             <input type="submit" value="Simpan" class="btn btn-success float-right">
@@ -59,6 +59,7 @@
                 dashboard : [],
                 kesepadananku : [],
                 form:new Form({
+                    kudikti_id:'',
                     kuprodi:''
                 }),
                 detailsById : [],
@@ -129,6 +130,11 @@
                   this.kesepadananku = data.data.data;
               });
           },
+          loadDashboard(){
+              axios.get(URL+'api/dashboard').then(data => {
+                  this.dashboard = data.data;
+              });
+          },
           loadDetailprofillulusan(){
               axios.get(URL+'api/detailprofillulusan').then(data => {
                   this.detailprofillulusan = data.data.data;
@@ -152,6 +158,7 @@
         },
         created() {
             this.loadKesepadananku();
+            this.loadDashboard();
             this.loadDetailprofillulusan();
         }
     }

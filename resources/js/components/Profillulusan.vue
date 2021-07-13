@@ -100,7 +100,7 @@
         },
         methods:{
            updateProfillulusan(){
-                this.form.put(URL+'api/profillulusan'+this.form.id);
+                this.form.put(URL+'api/profillulusan/'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -149,7 +149,7 @@
             },
           loadProfillulusan(){
               axios.get(URL+'api/profillulusan').then(data => {
-                  this.profillulusan = data.data.data;
+                  this.profillulusan = data.data;
               });
           },
           createProfillulusan(){

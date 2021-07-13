@@ -19,6 +19,7 @@ class Matkul extends Authenticatable
     protected $table = "matkul";
     protected $fillable = [
         'matkul',
+
     ];
 
     /**

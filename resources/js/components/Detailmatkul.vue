@@ -62,7 +62,7 @@
 
                  <div class="form-group">
                      <select name="matkul_id"  placeholder="Mata Kuliah" v-model="form.matkul_id" id="matkul" class="form-control" :class="{ 'is-invalid': form.errors.has('matkul_id') }">
-                        <option v-for="matkul in kajian" :key="matkul.id" v-bind:value="matkul.id">{{ matkul.kajian }}</option>
+                        <option v-for="matkul in kajian" :key="matkul.id" v-bind:value="matkul.id">{{ matkul.matkul }}</option>
                     </select>
                 <has-error :form="form" field="matkul"></has-error>
                 </div>
@@ -95,14 +95,14 @@
                 kajian : [],
                 detailmatkul : [],
                 form:new Form({
-                    matkul_id:'',
+                    matkul_id:[],
                     dtlmatkul:''
                 })
             }
         },
         methods:{
            updateDetailmatkul(){
-                this.form.put(URL+'api/matkul/all'+this.form.id);
+                this.form.put(URL+'api/detailmatkul'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -136,7 +136,7 @@
                     }).then((result) => {
                         // Send request to the server
                          if (result.value) {
-                                this.form.delete(URL+'api/matkul/all/'+id).then(()=>{
+                                this.form.delete(URL+'api/detailmatkul'+id).then(()=>{
                                         Swal.fire(
                                         'Deleted!',
                                         'Your file has been deleted.',
@@ -150,18 +150,20 @@
                     })
             },
           loadDetailmatkul(){
-              axios.get(URL+'api/matkul/all').then(data => {
-                  this.detailmatkul = data.data.data;
+              axios.get(URL+'api/detailmatkul').then(data => {
+                  this.detailmatkul = data.data;
+                  
               });
           },
           loadKajian(){
-              axios.get(URL+'api/kajian').then(data => {
-                  this.kajian= data.data.data;
-                  console.log(data);
+              axios.get(URL+'api/matkul').then(data => {
+                  console.log(data.data);
+                  this.kajian= data.data;
+                  
               });
           },
           createDetailmatkul(){
-            this.form.post(URL+'api/matkul/all');
+            this.form.post(URL+'api/detailmatkul');
             $('#addNew').modal('hide')
             Swal.fire({
                 icon: 'success',

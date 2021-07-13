@@ -57,4 +57,5 @@ class Kajian extends Authenticatable
     {
         return $this->hasOne(Detailmatkul::class, 'matkul_id', 'id');
     }
+    
 }

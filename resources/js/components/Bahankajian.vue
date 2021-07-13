@@ -66,7 +66,7 @@
                             <option value="Rumpun Keilmuan Iptek Pendukung">Rumpun Keilmuan Iptek Pendukung (KP)</option>
                             <option value="Rumpun Keilmuan Inti">Rumpun Keilmuan Inti (KI)</option>
                         </select>
-                        <has-error :form="form" field="unsur"></has-error>
+                        <has-error :form="form" field="rumpunkeilmuan"></has-error>
                   </div>
 
                 <div class="form-group">
@@ -152,7 +152,7 @@
             },
           loadBahankajian(){
               axios.get(URL+'api/bahankajian').then(data => {
-                  this.bahankajian = data.data.data;
+                  this.bahankajian = data.data;
               });
           },
           createBahankajian(){

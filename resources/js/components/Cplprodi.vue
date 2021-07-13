@@ -76,7 +76,7 @@
          },
           loadDetailprofillulusan(){
               axios.get(URL+'api/detailprofillulusan').then(data => {
-                  this.detailprofillulusan = data.data.data;
+                  this.detailprofillulusan = data.data;
 
               });
           },

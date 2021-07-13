@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Distribusimatkul as ModelsDistribusimatkul;
+use App\Models\Pembentukanmatkul as ModelsPembentukanmatkul;
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 class DistribusimatkulController extends Controller
@@ -14,9 +17,27 @@ class DistribusimatkulController extends Controller
      */
     public function index()
     {
-        //
+        $distribusimatkul= ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul')->get();
+        return $distribusimatkul;
     }
 
+    // public function cetak_data()
+    // {
+    //     $distribusimatkul= ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul')->get();
+    //     $pdf = PDF::loadview('cetakdata', ['distribusimatkul'=>$distribusimatkul]);
+    //     return $pdf->download('Kurikulum.pdf');
+    // }
+
+    public function totalsks($id)
+    {
+
+            $totalsks = ModelsDistribusimatkul::with('pembentukanmatkul')->where('pembulatansks',$id)->orderBy('created_at', 'ASC')->sum('pembulatansks')->get();
+    }
+    public function totaljam($id)
+    {
+
+            $totaljam = ModelsDistribusimatkul::with('pembentukanmatkul')->where('jam',$id)->orderBy('created_at', 'ASC')->sum('jam')->get();
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -25,7 +46,25 @@ class DistribusimatkulController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'smt_id' => ['required'],
+            'sks_id' => ['required'],
+            'jam_id' => ['required'],
+            'dtlmatkul_id' => ['required'],
+            'jenismatkul_id' => ['required'],
+            'totalsks' => ['required', 'string', 'max:255'],
+            'totaljam' => ['required', 'string', 'max:255'],
+        ]);
+        return ModelsDistribusimatkul::create([
+            'smt_id' => $request['smt_id'],
+            'sks_id' => $request['sks_id'],
+            'jam_id' => $request['jam_id'],
+            'dtlmatkul_id' => $request['dtlmatkul_id'],
+            'jenismatkul_id' => $request['jenismatkul_id'],
+            'totalsks' => $request['totalsks'],
+            'totaljam' => $request['totaljam']
+
+        ]);
     }
 
     /**
@@ -36,7 +75,8 @@ class DistribusimatkulController extends Controller
      */
     public function show($id)
     {
-        //
+        $distribusimatkul = ModelsDistribusimatkul::find($id);
+        return ['message' => $distribusimatkul];
     }
 
     /**

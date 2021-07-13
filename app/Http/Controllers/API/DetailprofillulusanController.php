@@ -17,9 +17,8 @@ class DetailprofillulusanController extends Controller
      */
     public function index()
     {
-        return ModelsDetailprofillulusan::latest()->with('profillulusan')->paginate(100);
-        //$detailprofillulusan = ModelsDetailprofillulusan::orderBy('created_at', 'ASC')->get();
-        //return view('detailprofillulusan', compact('detailprofillulusan'));
+        $detailprofillulusan = ModelsDetailprofillulusan::orderBy('created_at', 'ASC')->with('profillulusan')->get();
+        return $detailprofillulusan;
     }
 
     /**

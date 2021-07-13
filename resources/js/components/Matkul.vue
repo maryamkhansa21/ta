@@ -45,13 +45,13 @@
       
          loadMatkul(){
               axios.get(URL+'api/matkul').then(data => {
-                  this.matkul = data.data.data;
+                  this.matkul = data.data;
                   console.log(data);
               });
          },
           loadKajian(){
               axios.get(URL+'api/matkul').then(data => {
-                  this.kajian = data.data.data;
+                  this.kajian = data.data;
            
               });
           },

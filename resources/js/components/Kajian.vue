@@ -65,7 +65,7 @@
                                   <input v-model="form.matkul" type="text" name="matkul"
                                          placeholder="Matkul"
                                          class="form-control" :class="{ 'is-invalid': form.errors.has('matkul') }">
-                                  <has-error :form="form" field="bahankajian"></has-error>
+                                  <has-error :form="form" field="matkul"></has-error>
                               </div>
                               <div class="form-group">
                                   <label class="typo__label">Detail Profil Lulusan</label>
@@ -131,6 +131,16 @@
                this.bKajianById = bKajianById;
            },
             updateKajian(kajian){
+                if(this.detailsById.length==0){
+                    kajian.detailprofillulusan.forEach(data=>{
+                        this.detailsById.push(data.id)
+                    })
+                } 
+                if(this.bKajianById.length==0){
+                    kajian.bahankajian.forEach(data=>{
+                        this.bKajianById.push(data.id)
+                    })
+                } 
                 this.form.matkul = kajian.matkul;
                 this.form.details = this.detailsById;
                 this.form.bahankajians = this.bKajianById;
@@ -195,21 +205,21 @@
          },
           loadDetailprofillulusan(){
               axios.get(URL+'api/detailprofillulusan').then(data => {
-                  this.detailprofillulusan = data.data.data;
+                  this.detailprofillulusan = data.data;
               });
           },
           loadBahankajian(){
               axios.get(URL+'api/bahankajian').then(data => {
-                  this.bahankajian = data.data.data;
+                  this.bahankajian = data.data;
               });
           },
           createKajian(){
             this.form.details = this.detailsById;
-            this.form.bahankajian = this.bKajianById;
+            this.form.bahankajians = this.bKajianById;
             this.form.post(URL+'api/kajian');
 
               this.detailsById = [];
-              this.detailsById = [];
+              this.bKajianById = [];
             $('#addNew').modal('hide');
             Fire.$emit('AfterCreated');
             Swal.fire({

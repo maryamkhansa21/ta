@@ -2008,7 +2008,7 @@ var URL = "http://localhost:8000/";
       var _this2 = this;
 
       axios.get(URL + 'api/bahankajian').then(function (data) {
-        _this2.bahankajian = data.data.data;
+        _this2.bahankajian = data.data;
       });
     },
     createBahankajian: function createBahankajian() {
@@ -2117,7 +2117,7 @@ var URL = "http://localhost:8000/";
       var _this2 = this;
 
       axios.get(URL + 'api/detailprofillulusan').then(function (data) {
-        _this2.detailprofillulusan = data.data.data;
+        _this2.detailprofillulusan = data.data;
       });
     },
     createCplprodi: function createCplprodi() {
@@ -2389,14 +2389,14 @@ var URL = "http://localhost:8000/";
       kajian: [],
       detailmatkul: [],
       form: new Form({
-        matkul_id: '',
+        matkul_id: [],
         dtlmatkul: ''
       })
     };
   },
   methods: {
     updateDetailmatkul: function updateDetailmatkul() {
-      this.form.put(URL + 'api/matkul/all' + this.form.id);
+      this.form.put(URL + 'api/detailmatkul' + this.form.id);
       $('#addNew').modal('hide');
       Swal.fire('Updated!', 'Information has been updated.', 'success');
       Fire.$emit('AfterCreate');
@@ -2426,7 +2426,7 @@ var URL = "http://localhost:8000/";
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this.form["delete"](URL + 'api/matkul/all/' + id).then(function () {
+          _this.form["delete"](URL + 'api/detailmatkul' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreate');
           })["catch"](function () {
@@ -2438,20 +2438,20 @@ var URL = "http://localhost:8000/";
     loadDetailmatkul: function loadDetailmatkul() {
       var _this2 = this;
 
-      axios.get(URL + 'api/matkul/all').then(function (data) {
-        _this2.detailmatkul = data.data.data;
+      axios.get(URL + 'api/detailmatkul').then(function (data) {
+        _this2.detailmatkul = data.data;
       });
     },
     loadKajian: function loadKajian() {
       var _this3 = this;
 
-      axios.get(URL + 'api/kajian').then(function (data) {
-        _this3.kajian = data.data.data;
-        console.log(data);
+      axios.get(URL + 'api/matkul').then(function (data) {
+        console.log(data.data);
+        _this3.kajian = data.data;
       });
     },
     createDetailmatkul: function createDetailmatkul() {
-      this.form.post(URL + 'api/matkul/all');
+      this.form.post(URL + 'api/detailmatkul');
       $('#addNew').modal('hide');
       Swal.fire({
         icon: 'success',
@@ -2594,7 +2594,7 @@ var URL = "http://localhost:8000/";
   },
   methods: {
     updateDetailprofillulusan: function updateDetailprofillulusan() {
-      this.form.put(URL + 'api/detailprofillulusan' + this.form.id);
+      this.form.put(URL + 'api/detailprofillulusan/' + this.form.id);
       $('#addNew').modal('hide');
       Swal.fire('Updated!', 'Information has been updated.', 'success');
       Fire.$emit('AfterCreate');
@@ -2637,14 +2637,14 @@ var URL = "http://localhost:8000/";
       var _this2 = this;
 
       axios.get(URL + 'api/detailprofillulusan').then(function (data) {
-        _this2.detailprofillulusan = data.data.data;
+        _this2.detailprofillulusan = data.data;
       });
     },
     loadprofillulusan: function loadprofillulusan() {
       var _this3 = this;
 
       axios.get(URL + 'api/profillulusan').then(function (data) {
-        _this3.profillulusan = data.data.data;
+        _this3.profillulusan = data.data;
       });
     },
     createDetailprofillulusan: function createDetailprofillulusan() {
@@ -2662,6 +2662,137 @@ var URL = "http://localhost:8000/";
   created: function created() {
     this.loadprofillulusan();
     this.loadDetailprofillulusan();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var URL = "http://localhost:8000/";
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      editMode: false,
+      pembentukanmatkul: [],
+      detailmatkul: [],
+      distribusimatkul: [],
+      form: new Form({
+        smt_id: '',
+        dtlmatkul_id: '',
+        jenismatkul: '',
+        sks_id: '',
+        jam_id: '',
+        totalsks: '',
+        totaljam: ''
+      })
+    };
+  },
+  methods: {
+    updateDistribusimatkul: function updateDistribusimatkul() {
+      this.form.put(URL + 'api/distribusimatkul' + this.form.id);
+      $('#addNew').modal('hide');
+      Swal.fire('Updated!', 'Information has been updated.', 'success');
+      Fire.$emit('AfterCreate');
+    },
+    editModal: function editModal(distribusimatkul) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(distribusimatkul);
+    },
+    newModal: function newModal() {
+      this.editmode = false;
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    loadDetailmatkul: function loadDetailmatkul() {
+      var _this = this;
+
+      axios.get(URL + 'api/detailmatkul').then(function (data) {
+        _this.detailmatkul = data.data;
+      });
+    },
+    loadPembentukanmatkul: function loadPembentukanmatkul() {
+      var _this2 = this;
+
+      axios.get(URL + 'api/pembentukanmatkul').then(function (data) {
+        _this2.kajian = data.data;
+      });
+    },
+    loadDistribusimatkul: function loadDistribusimatkul() {
+      var _this3 = this;
+
+      axios.get(URL + 'api/distribusimatkul').then(function (data) {
+        _this3.distribusimatkul = data.data;
+        axios.get(URL + 'api/distribusimatkul', {
+          responseType: 'blob'
+        }).then(function (response) {
+          var url = window.URL.createObjectURL(new Blob([response.data]));
+          var link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'Kurikulum.pdf'); //or any other extension
+
+          document.body.appendChild(link);
+          link.click();
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      });
+    },
+    createDistribusimatkul: function createDistribusimatkul() {
+      this.form.post(URL + 'api/distribusimatkul');
+      $('#addNew').modal('hide');
+      Swal.fire({
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      Fire.$emit('AfterCreate');
+    }
+  },
+  created: function created() {
+    this.loadPembentukanmatkul();
+    this.loadDetailmatkul();
+    this.loadDistribusimatkul();
   }
 });
 
@@ -2842,6 +2973,20 @@ var URL = "http://localhost:8000/";
       this.bKajianById = bKajianById;
     },
     updateKajian: function updateKajian(kajian) {
+      var _this = this;
+
+      if (this.detailsById.length == 0) {
+        kajian.detailprofillulusan.forEach(function (data) {
+          _this.detailsById.push(data.id);
+        });
+      }
+
+      if (this.bKajianById.length == 0) {
+        kajian.bahankajian.forEach(function (data) {
+          _this.bKajianById.push(data.id);
+        });
+      }
+
       this.form.matkul = kajian.matkul;
       this.form.details = this.detailsById;
       this.form.bahankajians = this.bKajianById;
@@ -2866,7 +3011,7 @@ var URL = "http://localhost:8000/";
       $('#addNew').modal('show');
     },
     deleteKajian: function deleteKajian(id) {
-      var _this = this;
+      var _this2 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -2879,7 +3024,7 @@ var URL = "http://localhost:8000/";
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this.form["delete"](URL + 'api/kajian/' + id).then(function () {
+          _this2.form["delete"](URL + 'api/kajian/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreated');
           })["catch"](function () {
@@ -2889,7 +3034,7 @@ var URL = "http://localhost:8000/";
       });
     },
     loadKajian: function loadKajian(page) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (typeof page === 'undefined') {
         page = 1;
@@ -2897,29 +3042,29 @@ var URL = "http://localhost:8000/";
 
       var uri = URL + 'api/kajian?page=' + page;
       axios.get(uri).then(function (response) {
-        _this2.kajian = response.data;
+        _this3.kajian = response.data;
       });
     },
     loadDetailprofillulusan: function loadDetailprofillulusan() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get(URL + 'api/detailprofillulusan').then(function (data) {
-        _this3.detailprofillulusan = data.data.data;
+        _this4.detailprofillulusan = data.data;
       });
     },
     loadBahankajian: function loadBahankajian() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.get(URL + 'api/bahankajian').then(function (data) {
-        _this4.bahankajian = data.data.data;
+        _this5.bahankajian = data.data;
       });
     },
     createKajian: function createKajian() {
       this.form.details = this.detailsById;
-      this.form.bahankajian = this.bKajianById;
+      this.form.bahankajians = this.bKajianById;
       this.form.post(URL + 'api/kajian');
       this.detailsById = [];
-      this.detailsById = [];
+      this.bKajianById = [];
       $('#addNew').modal('hide');
       Fire.$emit('AfterCreated');
       Swal.fire({
@@ -2931,13 +3076,13 @@ var URL = "http://localhost:8000/";
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.loadKajian();
     this.loadDetailprofillulusan();
     this.loadBahankajian();
     Fire.$on('AfterCreated', function () {
-      _this5.loadKajian();
+      _this6.loadKajian();
     });
   }
 });
@@ -3017,6 +3162,7 @@ var URL = "http://localhost:8000/";
       dashboard: [],
       kesepadananku: [],
       form: new Form({
+        kudikti_id: '',
         kuprodi: ''
       }),
       detailsById: []
@@ -3079,11 +3225,18 @@ var URL = "http://localhost:8000/";
         _this2.kesepadananku = data.data.data;
       });
     },
-    loadDetailprofillulusan: function loadDetailprofillulusan() {
+    loadDashboard: function loadDashboard() {
       var _this3 = this;
 
+      axios.get(URL + 'api/dashboard').then(function (data) {
+        _this3.dashboard = data.data;
+      });
+    },
+    loadDetailprofillulusan: function loadDetailprofillulusan() {
+      var _this4 = this;
+
       axios.get(URL + 'api/detailprofillulusan').then(function (data) {
-        _this3.detailprofillulusan = data.data.data;
+        _this4.detailprofillulusan = data.data.data;
       });
     },
     createKesepadananku: function createKesepadananku() {
@@ -3103,6 +3256,7 @@ var URL = "http://localhost:8000/";
   },
   created: function created() {
     this.loadKesepadananku();
+    this.loadDashboard();
     this.loadDetailprofillulusan();
   }
 });
@@ -3167,7 +3321,7 @@ var URL = "http://localhost:8000/";
       var _this = this;
 
       axios.get(URL + 'api/matkul').then(function (data) {
-        _this.matkul = data.data.data;
+        _this.matkul = data.data;
         console.log(data);
       });
     },
@@ -3175,7 +3329,7 @@ var URL = "http://localhost:8000/";
       var _this2 = this;
 
       axios.get(URL + 'api/matkul').then(function (data) {
-        _this2.kajian = data.data.data;
+        _this2.kajian = data.data;
       });
     },
     createMatkul: function createMatkul() {
@@ -3202,6 +3356,415 @@ var URL = "http://localhost:8000/";
   created: function created() {
     this.loadMatkul();
     this.loadKajian();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var URL = "http://localhost:8000/";
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Multiselect: (vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  data: function data() {
+    return {
+      editMode: false,
+      pembentukanmatkul: [],
+      detailmatkul: [],
+      kajian: [],
+      bahankajian: [],
+      bahankajian_kajian: [],
+      form: new Form({
+        tk: '',
+        totaltk: '',
+        besarsks: '',
+        pembulatanmatkul: '',
+        psikomotorik: '',
+        jenismatkul: '',
+        jam: '',
+        smt: '',
+        dtlmatkul_id: [],
+        bahankajian_id: []
+      }),
+      smt: '',
+      dataTk: [],
+      dataMatkul: [],
+      dtlmatkulsById: [],
+      bKajiansById: [],
+      tk_data: ["1", "2", "3", "4", "5"],
+      psikomotorik_data: ["P1", "P2", "P3", "P4", "P5"]
+    };
+  },
+  methods: {
+    updateDetail: function updateDetail(dtlmatkuls) {
+      var dtlmatkulsById = [];
+      dtlmatkuls.forEach(function (dtlmatkul) {
+        detailsById.push(dtlmatkul.id);
+      });
+      this.dtlmatkulsById = dtlmatkulsById;
+    },
+    updateBKajian: function updateBKajian(bkajians) {
+      var bKajianById = [];
+      bkajians.forEach(function (bkajian) {
+        bKajianById.push(bkajian.id);
+      });
+      this.bKajianById = bKajianById;
+    },
+    updatePembentukanmatul: function updatePembentukanmatul(pembentukanmatkul) {
+      this.form.psikomotorik = pembentukanmatkul.psikomotorik;
+      this.form.dtlmatkul_id = this.dtlmatkulssById;
+      this.form.bahankajian_id = this.bKajiansById;
+      this.form.put(URL + 'api/pembentukanmatkul/' + pembentukanmatkul.id);
+      $('#addNew').modal('hide');
+      Swal.fire('Updated!', 'Information has been updated.', 'success');
+      Fire.$emit('AfterCreated');
+      this.dtlmatkul_id = [];
+      this.bahankajian_id = [];
+      this.form.reset();
+    },
+    editModal: function editModal(pembentukanmatkul) {
+      this.editMode = true;
+      this.form.reset();
+      $('#addNew').modal('show');
+      this.form.fill(pembentukanmatkul);
+    },
+    newModal: function newModal() {
+      this.dtlmatkulsById = [];
+      this.bKajianById = [];
+      this.form.reset();
+      $('#addNew').modal('show');
+    },
+    deletePembentukanmatkul: function deletePembentukanmatkul(id) {
+      var _this = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        // Send request to the server
+        if (result.value) {
+          _this.form["delete"](URL + 'api/pembentukanmatkul/' + id).then(function () {
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            swal("Failed!", "There was something wronge.", "warning");
+          });
+        }
+      });
+    },
+    loadPembentukanmatkul: function loadPembentukanmatkul(page) {
+      var _this2 = this;
+
+      axios.get(URL + 'api/pembentukanmatkul').then(function (data) {
+        _this2.pembentukanmatkul = data.data;
+      });
+    },
+    loadDetailmatkul: function loadDetailmatkul() {
+      var _this3 = this;
+
+      axios.get(URL + 'api/detailmatkul').then(function (data) {
+        _this3.detailmatkul = data.data;
+        console.log(_this3.detailmatkul);
+      });
+    },
+    loadBahankajian: function loadBahankajian() {
+      var _this4 = this;
+
+      axios.get(URL + 'api/bahankajian').then(function (data) {
+        _this4.kajian = data.data;
+      });
+    },
+    createPembentukanmatkul: function createPembentukanmatkul() {
+      var _this5 = this;
+
+      var detailMatkulArray = [];
+      this.dataMatkul.forEach(function (data) {
+        detailMatkulArray.push({
+          dtlmatkul_id: data,
+          smt: _this5.smt
+        });
+      });
+      axios.post(URL + 'api/pembentukanmatkul', {
+        dataMatkul: detailMatkulArray
+      });
+      $('#addNew').modal('hide');
+      Fire.$emit('AfterCreated');
+      Swal.fire({
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  },
+  created: function created() {
+    var _this6 = this;
+
+    this.loadPembentukanmatkul();
+    this.loadDetailmatkul();
+    this.loadBahankajian();
+    Fire.$on('AfterCreated', function () {
+      _this6.loadPembentukanmatkul();
+    });
   }
 });
 
@@ -3319,7 +3882,7 @@ var URL = "http://localhost:8000/";
   },
   methods: {
     updateProfillulusan: function updateProfillulusan() {
-      this.form.put(URL + 'api/profillulusan' + this.form.id);
+      this.form.put(URL + 'api/profillulusan/' + this.form.id);
       $('#addNew').modal('hide');
       Swal.fire('Updated!', 'Information has been updated.', 'success');
       Fire.$emit('AfterCreate');
@@ -3362,7 +3925,7 @@ var URL = "http://localhost:8000/";
       var _this2 = this;
 
       axios.get(URL + 'api/profillulusan').then(function (data) {
-        _this2.profillulusan = data.data.data;
+        _this2.profillulusan = data.data;
       });
     },
     createProfillulusan: function createProfillulusan() {
@@ -3508,7 +4071,12 @@ Vue.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ ".
 
 var app = new Vue({
   el: '#app',
-  router: router
+  router: router,
+  methods: {
+    printCetakdata: function printCetakdata() {
+      window.print();
+    }
+  }
 });
 
 /***/ }),
@@ -8018,6 +8586,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-2487152d] {\n    background-color: rgba(255, 255, 255, 1);\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-0eb89d2b] {\r\n    background-color: rgba(255, 255, 255, 1);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -39679,6 +40271,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_style_index_1_id_0eb89d2b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_style_index_1_id_0eb89d2b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_style_index_1_id_0eb89d2b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& ***!
@@ -44865,17 +45487,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Distribusimatkul.vue?vue&type=template&id=6c3df693& */ "./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693&");
+/* harmony import */ var _Distribusimatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Distribusimatkul.vue?vue&type=script&lang=js& */ "./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 ;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__.default)(
-  script,
-  render,
-  staticRenderFns,
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _Distribusimatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -44883,6 +45508,8 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/Distribusimatkul.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
@@ -45061,24 +45688,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true& */ "./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true&");
+/* harmony import */ var _Pembentukanmatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pembentukanmatkul.vue?vue&type=script&lang=js& */ "./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js&");
+/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _Pembentukanmatkul_vue_vue_type_style_index_1_id_0eb89d2b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& */ "./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__.default)(
-  script,
-  render,
-  staticRenderFns,
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__.default)(
+  _Pembentukanmatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "0eb89d2b",
   null
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/Pembentukanmatkul.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
@@ -45203,6 +45839,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Distribusimatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Distribusimatkul.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Distribusimatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -45267,6 +45919,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pembentukanmatkul.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Profillulusan.vue?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/Profillulusan.vue?vue&type=script&lang=js& ***!
@@ -45305,6 +45973,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Kajian_vue_vue_type_style_index_1_id_2487152d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kajian.vue?vue&type=style&index=1&id=2487152d&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Kajian.vue?vue&type=style&index=1&id=2487152d&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_style_index_1_id_0eb89d2b_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=style&index=1&id=0eb89d2b&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -45394,6 +46075,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693& ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Distribusimatkul_vue_vue_type_template_id_6c3df693___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Distribusimatkul.vue?vue&type=template&id=6c3df693& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -45458,6 +46156,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Matkul_vue_vue_type_template_id_b09227e6___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Matkul_vue_vue_type_template_id_b09227e6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Matkul.vue?vue&type=template&id=b09227e6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Matkul.vue?vue&type=template&id=b09227e6&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true& ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pembentukanmatkul_vue_vue_type_template_id_0eb89d2b_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true&");
 
 
 /***/ }),
@@ -45733,7 +46448,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "unsur" }
+                          attrs: { form: _vm.form, field: "rumpunkeilmuan" }
                         })
                       ],
                       1
@@ -46482,7 +47197,7 @@ var render = function() {
                                 key: matkul.id,
                                 domProps: { value: matkul.id }
                               },
-                              [_vm._v(_vm._s(matkul.kajian))]
+                              [_vm._v(_vm._s(matkul.matkul))]
                             )
                           }),
                           0
@@ -47056,6 +47771,127 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Distribusimatkul.vue?vue&type=template&id=6c3df693& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-6", attrs: { "data-select2-id": "14" } },
+          [
+            _c(
+              "div",
+              { staticClass: "form-group", attrs: { "data-select2-id": "13" } },
+              [
+                _c("label", [_vm._v("Pilih Semester :")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.smt_id,
+                        expression: "form.smt_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: { "is-invalid": _vm.form.errors.has("smt_id") },
+                    attrs: { name: "smt", placeholder: "Semester", id: "smt" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "smt_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.pembentukanmatkul, function(smt) {
+                    return _c(
+                      "option",
+                      { key: smt.id, domProps: { value: smt.id } },
+                      [_vm._v(_vm._s(smt.pembentukanmatkul))]
+                    )
+                  }),
+                  0
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-success float-right",
+            attrs: { href: "", target: "_blank" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.printCetakdata($event)
+              }
+            }
+          },
+          [_vm._v("Cetak Data")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h3", { staticClass: "card-title" }, [
+          _vm._v("Distribusi Mata Kuliah")
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
@@ -47339,7 +48175,7 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "bahankajian" }
+                          attrs: { form: _vm.form, field: "matkul" }
                         })
                       ],
                       1
@@ -47547,15 +48383,16 @@ var render = function() {
                               },
                               on: { input: _vm.updateDprofillulusan },
                               model: {
-                                value: kesepadananku.detailprofillulusan,
+                                value: kesepadananku.detailprofillulusan.detail,
                                 callback: function($$v) {
                                   _vm.$set(
-                                    kesepadananku,
-                                    "detailprofillulusan",
+                                    kesepadananku.detailprofillulusan,
+                                    "detail",
                                     $$v
                                   )
                                 },
-                                expression: "kesepadananku.detailprofillulusan"
+                                expression:
+                                  "kesepadananku.detailprofillulusan.detail"
                               }
                             })
                           ],
@@ -47569,7 +48406,7 @@ var render = function() {
                               on: {
                                 submit: function($event) {
                                   $event.preventDefault()
-                                  return _vm.updateDashboard(_vm.kuprodi)
+                                  return _vm.updateKesepadananku(kesepadananku)
                                 }
                               }
                             },
@@ -47704,6 +48541,1561 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [_c("tr", [_c("th", [_vm._v("Mata Kuliah")])])])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pembentukanmatkul.vue?vue&type=template&id=0eb89d2b&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row mb-2 mt-2" }, [
+      _c(
+        "div",
+        { staticClass: "col-sm-7" },
+        [
+          _c("pagination", {
+            attrs: { data: _vm.pembentukanmatkul },
+            on: { "pagination-change-page": _vm.loadPembentukanmatkul }
+          })
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [
+              _vm._v("Pembentukan Mata Kuliah")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-success", on: { click: _vm.newModal } },
+                [
+                  _vm._v("Tambah "),
+                  _c("i", { staticClass: "fas fa-user-plus fa-fw" })
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "table",
+          {
+            staticClass:
+              "table table-bordered table-striped dataTable dtr-inline",
+            attrs: {
+              id: "example1",
+              role: "grid",
+              "aria-describedby": "example1_info"
+            }
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.pembentukanmatkul, function(pembentukanmatkul) {
+                return _c("tr", { key: pembentukanmatkul.id }, [
+                  _c("td", [
+                    _vm._v(_vm._s(pembentukanmatkul.detailmatkul.dtlmatkul))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(pembentukanmatkul.bahankajian_kajian))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dataTk[0],
+                            expression: "dataTk[0]"
+                          }
+                        ],
+                        attrs: { name: "tk", id: "tk" },
+                        domProps: { value: pembentukanmatkul.tk },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.dataTk,
+                              0,
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.tk_data, function(tk) {
+                        return _c(
+                          "option",
+                          { key: tk, domProps: { value: tk } },
+                          [_vm._v(_vm._s(tk))]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dataTk[1],
+                            expression: "dataTk[1]"
+                          }
+                        ],
+                        attrs: { name: "tk", id: "tk" },
+                        domProps: { value: pembentukanmatkul.tk },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.dataTk,
+                              1,
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.tk_data, function(tk) {
+                        return _c(
+                          "option",
+                          { key: tk, domProps: { value: tk } },
+                          [_vm._v(_vm._s(tk))]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dataTk[2],
+                            expression: "dataTk[2]"
+                          }
+                        ],
+                        attrs: { name: "tk", id: "tk" },
+                        domProps: { value: pembentukanmatkul.tk },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.dataTk,
+                              2,
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.tk_data, function(tk) {
+                        return _c(
+                          "option",
+                          { key: tk, domProps: { value: tk } },
+                          [_vm._v(_vm._s(tk))]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dataTk[3],
+                            expression: "dataTk[3]"
+                          }
+                        ],
+                        attrs: { name: "tk", id: "tk" },
+                        domProps: { value: pembentukanmatkul.tk },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.dataTk,
+                              3,
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.tk_data, function(tk) {
+                        return _c(
+                          "option",
+                          { key: tk, domProps: { value: tk } },
+                          [_vm._v(_vm._s(tk))]
+                        )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.dataTk[4],
+                            expression: "dataTk[4]"
+                          }
+                        ],
+                        attrs: { name: "tk", id: "tk" },
+                        domProps: { value: pembentukanmatkul.tk },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.dataTk,
+                              4,
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.tk_data, function(tk) {
+                        return _c(
+                          "option",
+                          { key: tk, domProps: { value: tk } },
+                          [_vm._v(_vm._s(tk))]
+                        )
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pembentukanmatkul.totaltk))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pembentukanmatkul.besarsks))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pembentukanmatkul.pembulatansks))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: pembentukanmatkul.psikomotorik,
+                            expression: "pembentukanmatkul.psikomotorik"
+                          }
+                        ],
+                        attrs: { name: "psikomotorik", id: "psikomotorik" },
+                        domProps: { value: pembentukanmatkul.psikomotorik },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              pembentukanmatkul,
+                              "psikomotorik",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.psikomotorik_data, function(psikomotorik) {
+                        return _c(
+                          "option",
+                          {
+                            key: psikomotorik,
+                            domProps: { value: psikomotorik }
+                          },
+                          [_vm._v(_vm._s(psikomotorik))]
+                        )
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm.psikomotorik === "P1"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      Teori\n                      "
+                          )
+                        ])
+                      : _vm.psikomotorik === "P2"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      Teori\n                      "
+                          )
+                        ])
+                      : _vm.psikomotorik === "P3"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      Praktek\n                      "
+                          )
+                        ])
+                      : _vm.psikomotorik === "P4"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      Praktek\n                      "
+                          )
+                        ])
+                      : _vm.psikomotorik === "P5"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      Praktek\n                      "
+                          )
+                        ])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                      -\n                      "
+                          )
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm.jenismatkul === "Teori"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      " +
+                              _vm._s(_vm.pembulatansks * 1) +
+                              "\n                      "
+                          )
+                        ])
+                      : _vm.jenismatkul === "Praktek"
+                      ? _c("div", [
+                          _vm._v(
+                            "\n                      " +
+                              _vm._s(_vm.pembulatansks * 3) +
+                              "\n                      "
+                          )
+                        ])
+                      : _c("div", [
+                          _vm._v(
+                            "\n                      -\n                      "
+                          )
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pembentukanmatkul.smt))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.updatePembentukanmatkul(
+                              pembentukanmatkul
+                            )
+                          }
+                        }
+                      },
+                      [_vm._m(1, true)]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNew",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "addNewLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.createPembentukanmatkul()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.smt,
+                                expression: "smt"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: { "is-invalid": _vm.form.errors.has("smt") },
+                            attrs: { name: "smt", id: "smt" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.smt = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "Semester 1" } }, [
+                              _vm._v("Semester 1")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 2" } }, [
+                              _vm._v("Semester 2")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 3" } }, [
+                              _vm._v("Semester 3")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 4" } }, [
+                              _vm._v("Semester 4")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 5" } }, [
+                              _vm._v("Semester 5")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 6" } }, [
+                              _vm._v("Semester 6")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 7" } }, [
+                              _vm._v("Semester 7")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Semester 8" } }, [
+                              _vm._v("Semester 8")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "smt" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 1")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[0],
+                              expression: "dataMatkul[0]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                0,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 2")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[1],
+                              expression: "dataMatkul[1]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                1,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 3")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[2],
+                              expression: "dataMatkul[2]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                2,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 4")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[3],
+                              expression: "dataMatkul[3]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                3,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 5")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[4],
+                              expression: "dataMatkul[4]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                4,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 6")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[5],
+                              expression: "dataMatkul[5]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                5,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 7")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[6],
+                              expression: "dataMatkul[6]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                6,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 8")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[7],
+                              expression: "dataMatkul[7]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                7,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 9")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[8],
+                              expression: "dataMatkul[8]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                8,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 10")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[9],
+                              expression: "dataMatkul[9]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                9,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 11")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[10],
+                              expression: "dataMatkul[10]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                10,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 12")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[11],
+                              expression: "dataMatkul[11]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                11,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 13")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[12],
+                              expression: "dataMatkul[12]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                12,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 14")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[13],
+                              expression: "dataMatkul[13]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                13,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "typo__label" }, [
+                        _vm._v("Mata Kuliah 15")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.dataMatkul[14],
+                              expression: "dataMatkul[14]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("dtlmatkul_id")
+                          },
+                          attrs: {
+                            name: "dtlmatkul_id",
+                            placeholder: "Mata Kuliah",
+                            "allow-empty": true,
+                            id: "dtlmatkul"
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.dataMatkul,
+                                14,
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.detailmatkul, function(dtlmatkul) {
+                          return _c(
+                            "option",
+                            {
+                              key: dtlmatkul.id,
+                              domProps: { value: dtlmatkul.id }
+                            },
+                            [_vm._v(_vm._s(dtlmatkul.dtlmatkul))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ]
+              )
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Mata Kuliah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Bahan Kajian")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tingkat Kedalaman Mata Kuliah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Tingkat Kedalaman")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Besaran SKS")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Pembulatan SKS")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Level Psikomotorik Mata Kuliah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Jenis Mata Kuliah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("SKS/Jam Mata Kuliah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Semester")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("input", {
+          staticClass: "btn btn-success float-right",
+          attrs: { type: "submit", value: "Simpan" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title", attrs: { id: "addNewLabel" } }, [
+        _vm._v("Tambah Semester")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-bs-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Create")]
+      )
+    ])
   }
 ]
 render._withStripped = true

@@ -19,7 +19,9 @@ class KajianController extends Controller
      */
     public function index()
     {
-        return ModelsKajian::latest()->with('detailprofillulusan', 'bahankajian')->paginate(1)->toJson();
+        // return ModelsKajian::latest()->with('detailprofillulusan', 'bahankajian')->paginate(1)->toJson();
+        $kajian = ModelsKajian::orderBy('created_at', 'ASC')->with('detailprofillulusan', 'bahankajian')->paginate(1)->toJson();
+        return $kajian;
     }
 
     /**

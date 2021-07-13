@@ -17,7 +17,8 @@ class KesepadanankuController extends Controller
      */
     public function index()
     {
-        return ModelsKesepadananku::latest()->with('detailprofillulusan', 'dashboard')->paginate(10)->toJson();
+        $kesepadananku = ModelsKesepadananku::orderBy('created_at', 'ASC')->with('dashboard', 'detailprofillulusan')->get();
+        return $kesepadananku;
     }
 
     /**
@@ -30,9 +31,11 @@ class KesepadanankuController extends Controller
     {
         $this->validate($request, [
             'kuprodi' => ['required', 'string', 'max:1000'],
+            'kudikti_id' => ['required'],
         ]);
         return ModelsKesepadananku::create([
-            'kuprodi' => $request['kuprodi']
+            'kuprodi' => $request['kuprodi'],
+            'kudikti_id' => $request['kudikti_id']
 
         ]);
         $kesepadananku = new ModelsKesepadananku();
@@ -68,6 +71,7 @@ class KesepadanankuController extends Controller
         $kesepadananku = ModelsKesepadananku::findOrFail($id);
         $this->validate($request, [
             'kuprodi' => ['required', 'string', 'max:1000'],
+            'kudikti_id' => ['required'],
         ]);
         $kesepadananku->update($request->all());
         return ['message' => 'Kesepadanan Keterampilan Umum Update'];

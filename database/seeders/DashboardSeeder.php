@@ -15,7 +15,7 @@ class DashboardSeeder extends Seeder
     {
         \App\Models\Dashboard::insert([
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu menerapkan pemikian logis, kritis, inovatif, bermutu, 
                 dan terukur dalam melakukan pekerjaan yang spesifik di 
@@ -25,14 +25,14 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu menunjukkan kinerja mandiri, bermutu dan terukur',
                 'created_at' => new \DateTime,
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu mengkaji kasus penerapan ilmu pengetahuan dan 
                 teknologi yang memperhatikan dan menerapkan nilai
@@ -45,7 +45,7 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu menyusun hasil kajian tersebut di atas dalam bentuk
                 kertas kerja, spesifikasi desain, atau esai seni, dan 
@@ -54,7 +54,7 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu mengambil keputusan secara tepat berdasarkan
                 prosedur baku, spesifikasi desain, persyaratan keselamatan
@@ -64,14 +64,14 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu memelihara dan mengembangkan jaringan kerja sama dan hasil kerja sama di dalam maupun di luar lembaganya',
                 'created_at' => new \DateTime,
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu bertanggungjawab atas pencapaian hasil kerja 
                 kelompok dan melakukan supervisi dan evaluasi terhadap 
@@ -81,7 +81,7 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu melakukan proses evaluasi diri terhadap kelompok 
                 kerja yang berada dibawah tanggung jawabnya, dan mampu 
@@ -90,7 +90,7 @@ class DashboardSeeder extends Seeder
                 'updated_at' => null,
             ],
             [
-                'programstudi' => 'IT',
+                'programstudi' => 'Sains Data',
                 'jenjang' => "Sarjana Terapan",
                 'kudikti' => 'mampu mendokumentasikan, menyimpan, mengamankan, dan 
                 menemukan kembali data untuk menjamin kesahihan dan

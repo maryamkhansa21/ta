@@ -2,10 +2,59 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Pembentukanmatkul extends Model
+class Pembentukanmatkul extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $table = "pembentukanmatkul";
+    protected $fillable = [
+        'tk',
+        'totaltk',
+        'besarsks',
+        'pembulatansks',
+        'psikomotorik',
+        'jenismatkul',
+        'jam',
+        'smt',
+        'dtlmatkul_id',
+        'bahankajian_id'
+
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    //protected $hidden = [
+    //'password',
+    //'remember_token',
+    //];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    //protected $casts = [
+    //'email_verified_at' => 'datetime',
+    //];
+    public function detailmatkul()
+    {
+        return $this->belongsTo(Detailmatkul::class, 'dtlmatkul_id', 'id');
+    }
+    public function bahankajian()
+    {
+        return $this->belongsToMany(Bahankajian::class, 'bahankajian_kajian');
+    }
 }

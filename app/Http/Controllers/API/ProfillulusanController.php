@@ -18,8 +18,10 @@ class ProfillulusanController extends Controller
 
     public function index()
     {
-        return Profillulusan::latest()->paginate(100);
-        
+        $profillulusan = Profillulusan::orderBy('created_at', 'ASC')->get();
+        return $profillulusan;
+        //return Profillulusan::latest()->paginate(100);
+
     }
 
     /**

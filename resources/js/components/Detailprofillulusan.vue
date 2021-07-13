@@ -112,7 +112,7 @@
         },
         methods:{
            updateDetailprofillulusan(){
-                this.form.put(URL+'api/detailprofillulusan'+this.form.id);
+                this.form.put(URL+'api/detailprofillulusan/'+this.form.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
@@ -161,12 +161,12 @@
             },
           loadDetailprofillulusan(){
               axios.get(URL+'api/detailprofillulusan').then(data => {
-                  this.detailprofillulusan = data.data.data;
+                  this.detailprofillulusan = data.data;
               });
           },
           loadprofillulusan(){
               axios.get(URL+'api/profillulusan').then(data => {
-                  this.profillulusan = data.data.data;
+                  this.profillulusan = data.data;
               });
           },
           createDetailprofillulusan(){
