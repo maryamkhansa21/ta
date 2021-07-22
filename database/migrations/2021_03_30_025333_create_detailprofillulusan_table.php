@@ -15,8 +15,8 @@ class CreateDetailprofillulusanTable extends Migration
     {
         Schema::create('detailprofillulusan', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->text('detail');
+            $table->text('code');
+            $table->longText('detail');
             $table->bigInteger('profil_id')->unsigned();
             $table->foreign('profil_id')->references('id')->on('profillulusan')->onDelete('cascade');
             $table->string('unsur')->nullable();

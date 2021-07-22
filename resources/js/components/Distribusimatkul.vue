@@ -20,7 +20,7 @@
         </div>
          <div class="row">
             <div class="col-12">
-               <a href="" @click.prevent="printCetakdata" class="btn btn-success float-right" target="_blank">Cetak Data</a>
+               <a href="/cetakdata" target="_blank" class="btn btn-success float-right"><i class="fa fa-print"></i>Cetak Data</a>
             </div>
         </div>
     </div>
@@ -78,25 +78,13 @@
           },
           loadPembentukanmatkul(){
               axios.get(URL+'api/pembentukanmatkul').then(data => {
-                  this.kajian= data.data;
+                  this.pembentukanmatkul= data.data;
                   
               });
           },
           loadDistribusimatkul(){
               axios.get(URL+'api/distribusimatkul').then(data => {
                   this.distribusimatkul= data.data;
-              axios.get(URL + 'api/distribusimatkul', {responseType: 'blob'}).then(response => {
-                  const url = window.URL.createObjectURL(new Blob([response.data]));
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.setAttribute('download', 'Kurikulum.pdf'); //or any other extension
-                  document.body.appendChild(link);
-                  link.click();
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-                  
               });
           },
           createDistribusimatkul(){

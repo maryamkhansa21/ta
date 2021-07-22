@@ -1,72 +1,63 @@
 <template>
-    <div class="container">
+      <div class="container">
+          <div class="row mb-2 mt-2">
+          </div>
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Kesepadanan Keterampilan Umum SN Dikti dengan Program Studi</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
-                  <thead>
-                    <tr role="row">
-                      <th>Keterampilan Umum SN Dikti</th>
-                      <th>Keterampilan Umum Prodi</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="kesepadananku in kesepadananku" :key="kesepadananku.id">
-                      <td>{{kesepadananku.dashboard.kudikti}}</td>
-                       <td>
-                          <multiselect style="z-index : 2;position : relative;" v-model="kesepadananku.detailprofillulusan.detail" placeholder="Pilih KU Prodi" label="detail" track-by="id" :options="detailprofillulusan" :multiple="true" @input="updateDprofillulusan"></multiselect>
-                      </td>
-                      <td>
-                           <form @submit.prevent="updateKesepadananku(kesepadananku)">
-                        <div class="row">
-                          <div class="col-12">
-                            <input type="submit" value="Simpan" class="btn btn-success float-right">
-                          </div>
-                        </div>
-                        </form>
-                      </td>
-                    </tr>
-                    <tr>
-                    </tr>
-                  </tbody>
-                </table>
+                <h3 class="card-title">Kesepadanan Keterampilan Umum</h3>
               </div>
               <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+                  <thead>
+                  <tr>
+                      <th>Keterampilan Umum SN DIKTI</th>
+                      <th>Keterampilan Umum Program Studi</th>
+                      <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="(kesepadananku, index) in kesepadananku.data" :key="kesepadananku.id">
+                      <td>{{kesepadananku.kudikti}}</td>
+                      <td>
+                          <multiselect v-model="kesepadananku.detailprofillulusan" placeholder="Pilih Capaian Profil Lulusan" label="code" track-by="id" :options="detailprofillulusan" :multiple="true" @input="updateDetail"></multiselect>
+                      </td>
+                      <td>
+                          <button type="button" class="btn btn-success float-right" @click="updateKesepadananku(kesepadananku)">Simpan</button>
+                      </td>
+                  </tr>
+                  </tbody>
+              </table>
+
+              <!-- /.card -->
           </div>
         </div>
-    </div>
+      </div>
 </template>
 
 <script>
     const URL = "http://localhost:8000/";
     import Multiselect from 'vue-multiselect';
     export default {
-      components: {
+        components: {
             Multiselect
         },
         data () {
             return {
                 editMode: false,
                 detailprofillulusan : [],
-                dashboard : [],
                 kesepadananku : [],
-                form:new Form({
-                    kudikti_id:'',
-                    kuprodi:''
+                  form:new Form({
+                    details :[],
+                    kudikti :''
                 }),
                 detailsById : [],
             }
         },
-        methods:{
-          updateDetail(details) {
+       methods:{
+           updateDetail(details) {
                let detailsById = [];
 
                details.forEach((detail) => {
@@ -75,18 +66,25 @@
 
                this.detailsById = detailsById;
            },
-           updateKesepadananku(){
+            updateKesepadananku(kesepadananku){
+                if(this.detailsById.length==0){
+                    kesepadananku.detailprofillulusan.forEach(data=>{
+                        this.detailsById.push(data.id)
+                    })
+                } 
+                this.form.kudikti = kesepadananku.kudikti;
                 this.form.details = this.detailsById;
-                this.form.put(URL+'api/kesepadananku'+this.form.id);
+                this.form.put(URL+'api/kesepadananku/'+kesepadananku.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
                         'Updated!',
                         'Information has been updated.',
                         'success'
                         )
-                     
-                         Fire.$emit('AfterCreate');
-                
+                Fire.$emit('AfterCreated');
+                this.details = [];
+                this.form.reset();
+
             },
             editModal(kesepadananku){
                 this.editMode = true;
@@ -96,7 +94,6 @@
             },
             newModal(){
                 this.detailsById = [];
-                this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
@@ -118,26 +115,22 @@
                                         'Your file has been deleted.',
                                         'success'
                                         )
-                                    Fire.$emit('AfterCreate');
+                                    Fire.$emit('AfterCreated');
                                 }).catch(()=> {
                                     swal("Failed!", "There was something wronge.", "warning");
                                 });
                          }
                     })
             },
-          loadKesepadananku(){
-              axios.get(URL+'api/kesepadananku').then(data => {
-                  this.kesepadananku = data.data.data;
+         loadKesepadananku(){
+            axios.get(URL+'api/kesepadananku').then(data => {
+                  this.kesepadananku = data.data;
+                  console.log(data);
               });
-          },
-          loadDashboard(){
-              axios.get(URL+'api/dashboard').then(data => {
-                  this.dashboard = data.data;
-              });
-          },
+         },
           loadDetailprofillulusan(){
               axios.get(URL+'api/detailprofillulusan').then(data => {
-                  this.detailprofillulusan = data.data.data;
+                  this.detailprofillulusan = data.data;
               });
           },
           createKesepadananku(){
@@ -145,9 +138,8 @@
             this.form.post(URL+'api/kesepadananku');
 
               this.detailsById = [];
-              this.detailsById = [];
-            this.form.post(URL+'api/kesepadananku');
-            $('#addNew').modal('hide')
+            $('#addNew').modal('hide');
+            Fire.$emit('AfterCreated');
             Swal.fire({
                 icon: 'success',
                 title: 'Your work has been saved',
@@ -158,10 +150,18 @@
         },
         created() {
             this.loadKesepadananku();
-            this.loadDashboard();
             this.loadDetailprofillulusan();
+            Fire.$on('AfterCreated', () => {
+                this.loadKesepadananku();
+            })
         }
     }
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style scoped>
+.card {
+    background-color: rgba(255, 255, 255, 1);
+}
+</style>
+
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKesepadanankuTable extends Migration
+class TkPembentukanmatkul extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateKesepadanankuTable extends Migration
      */
     public function up()
     {
-        Schema::create('kesepadananku', function (Blueprint $table) {
+            Schema::create('tk_pembentukanmatkul', function (Blueprint $table) {
             $table->id();
-            $table->text('kudikti');
+            $table->bigInteger('pembentukanmatkul_id')->unsigned();
+            $table->foreign('pembentukanmatkul_id')->references('id')->on('pembentukanmatkul')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateKesepadanankuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kesepadananku');
+        //
     }
 }

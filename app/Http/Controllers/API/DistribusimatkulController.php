@@ -17,26 +17,19 @@ class DistribusimatkulController extends Controller
      */
     public function index()
     {
-        $distribusimatkul= ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul')->get();
+        $distribusimatkul = ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul', 'detailmatkul')->get();
         return $distribusimatkul;
     }
-
-    // public function cetak_data()
-    // {
-    //     $distribusimatkul= ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul')->get();
-    //     $pdf = PDF::loadview('cetakdata', ['distribusimatkul'=>$distribusimatkul]);
-    //     return $pdf->download('Kurikulum.pdf');
-    // }
 
     public function totalsks($id)
     {
 
-            $totalsks = ModelsDistribusimatkul::with('pembentukanmatkul')->where('pembulatansks',$id)->orderBy('created_at', 'ASC')->sum('pembulatansks')->get();
+        $totalsks = ModelsDistribusimatkul::with('pembentukanmatkul')->where('pembulatansks', $id)->orderBy('created_at', 'ASC')->sum('pembulatansks')->get();
     }
     public function totaljam($id)
     {
 
-            $totaljam = ModelsDistribusimatkul::with('pembentukanmatkul')->where('jam',$id)->orderBy('created_at', 'ASC')->sum('jam')->get();
+        $totaljam = ModelsDistribusimatkul::with('pembentukanmatkul')->where('jam', $id)->orderBy('created_at', 'ASC')->sum('jam')->get();
     }
     /**
      * Store a newly created resource in storage.

@@ -23,6 +23,7 @@
                       <th>Bahan Kajian</th>
                       <th>Tingkat Kedalaman Mata Kuliah</th>
                       <th>Total Tingkat Kedalaman</th>
+                      <th>Total Semua Tingkat Kedalaman</th>
                       <th>Besaran SKS</th>
                       <th>Pembulatan SKS</th>
                       <th>Level Psikomotorik Mata Kuliah</th>
@@ -33,34 +34,36 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr v-for="pembentukanmatkul in pembentukanmatkul" :key="pembentukanmatkul.id">
+                  <tr v-for="(pembentukanmatkul, index) in pembentukanmatkul" :key="pembentukanmatkul.id">
                       <td>{{pembentukanmatkul.detailmatkul.dtlmatkul}}</td>
-                      <td>{{pembentukanmatkul.bahankajian_kajian}}</td>
+                      <td>{{pembentukanmatkul.bahankajian}}</td>
                      <td>
-                          <select name="tk" v-model="dataTk[0]" id="tk"  v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk1" v-bind:value="pembentukanmatkul.tk">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTk[1]" id="tk"  v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk2" v-bind:value="pembentukanmatkul.tk">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTk[2]" id="tk"  v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk3" v-bind:value="pembentukanmatkul.tk">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTk[3]" id="tk"  v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk4" v-bind:value="pembentukanmatkul.tk">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTk[4]" id="tk"  v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk5" v-bind:value="pembentukanmatkul.tk">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
+
                       </td>
                       <td>{{pembentukanmatkul.totaltk}}</td>
+                      <td>{{pembentukanmatkul.alltotaltk}}</td>
                       <td>{{pembentukanmatkul.besarsks}}</td>
                       <td>{{pembentukanmatkul.pembulatansks}}</td>
                       <td> <select name="psikomotorik" v-model="pembentukanmatkul.psikomotorik" id="psikomotorik"  v-bind:value="pembentukanmatkul.psikomotorik">
                             <option v-for="psikomotorik in psikomotorik_data" v-bind:key="psikomotorik" v-bind:value="psikomotorik">{{psikomotorik}}</option>
                           </select>
                       </td>
-                      <td> 
+                      <td>
                           <div v-if="psikomotorik === 'P1'">
                             Teori
                             </div>
@@ -79,7 +82,7 @@
                             <div v-else>
                             -
                             </div>
-                          
+
                       </td>
                       <td>
                             <div v-if="jenismatkul === 'Teori'">
@@ -94,13 +97,7 @@
                       </td>
                       <td>{{pembentukanmatkul.smt}}</td>
                       <td>
-                        <form @submit.prevent="updatePembentukanmatkul(pembentukanmatkul)">
-                        <div class="row">
-                          <div class="col-12">
-                            <input type="submit" value="Simpan" class="btn btn-success float-right">
-                          </div>
-                        </div>
-                        </form>
+                        <button type="button" class="btn btn-success float-right" @click="updatePembentukanmatkul(pembentukanmatkul)">Simpan</button>
                       </td>
                   </tr>
                   </tbody>
@@ -241,7 +238,7 @@
 <script>
    const URL = "http://localhost:8000/";
    import Multiselect from 'vue-multiselect';
-   
+
    export default {
 
         components: {
@@ -258,18 +255,19 @@
                 form:new Form({
                     tk :'',
                     totaltk:'',
+                    alltotaltk:'',
                     besarsks:'',
-                    pembulatanmatkul:'',
+                    pembulatansks:'',
                     psikomotorik:'',
                     jenismatkul:'',
                     jam:'',
                     smt:'',
                     dtlmatkul_id:[],
                     bahankajian_id:[],
-    
+
                 }),
                 smt : '',
-                dataTk: [],
+                dataTKNew : [],
                 dataMatkul : [],
                 dtlmatkulsById : [],
                 bKajiansById : [],
@@ -290,7 +288,33 @@
                 ],
             }
         },
-        methods:{
+       mounted() {
+            for(var i=0;i<15;i++){
+                this.dataTKNew.push({
+                    dataTk1 : '',
+                    dataTk2 : '',
+                    dataTk3 : '',
+                    dataTk4 : '',
+                    dataTk5 : '',
+                })
+            }
+       },
+       computed: {
+           totaltk: function(){
+               return totaltk+=parseInt(this.tk)
+           },
+           alltotaltk: function(){
+               return alltotaltk+=parseInt(this.totaltk)
+           },
+           besarsks: function(){
+               return parseInt(this.totaltk) / parseInt(this.alltotaltk) * 144;
+           },
+           pembulatansks: function(){
+               return parseInt(this.besarsks);
+           }
+
+       },
+       methods:{
            updateDetail(dtlmatkuls) {
                let dtlmatkulsById = [];
 
@@ -300,19 +324,22 @@
 
                this.dtlmatkulsById = dtlmatkulsById;
            },
-           updateBKajian(bkajians) {
-               let bKajianById = [];
-
-               bkajians.forEach((bkajian) => {
-                   bKajianById.push(bkajian.id);
-               });
-
-               this.bKajianById = bKajianById;
-           },
-           updatePembentukanmatul(pembentukanmatkul){
+           updatePembentukanmatkul(pembentukanmatkul){
+               if(this.dataMatkul.length==0){
+                    pembentukanmatkul.detailmatkul.forEach(data=>{
+                        this.dataMatkul.push(data.id)
+                    })
+                } 
+                 
+                this.form.tk = pembentukanmatkul.tk;
+                this.form.totaltk = pembentukanmatkul.totaltk;
+                this.form.alltotaltk = pembentukanmatkul.alltotaltk;
                 this.form.psikomotorik = pembentukanmatkul.psikomotorik;
+                this.form.besarsks = pembentukanmatkul.besarsks;
+                this.form.pembulatansks = pembentukanmatkul.pembulatansks;
+                this.form.jam = pembentukanmatkul.jam;
+                this.form.jenismatkul = pembentukanmatkul.jenismatkul;
                 this.form.dtlmatkul_id = this.dtlmatkulssById;
-                this.form.bahankajian_id = this.bKajiansById;
                 this.form.put(URL+'api/pembentukanmatkul/'+pembentukanmatkul.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
@@ -322,7 +349,6 @@
                         )
                 Fire.$emit('AfterCreated');
                 this.dtlmatkul_id = [];
-                this.bahankajian_id = [];
                 this.form.reset();
 
             },
@@ -363,8 +389,13 @@
                          }
                     })
             },
-          loadPembentukanmatkul(page){
+          loadPembentukanmatkul(){
               axios.get(URL+'api/pembentukanmatkul').then(data => {
+                  this.pembentukanmatkul = data.data;
+              });
+         },
+         loadpembentukanmatkul(){
+              axios.get(URL+'api/bkajian').then(data => {
                   this.pembentukanmatkul = data.data;
               });
          },
@@ -375,8 +406,8 @@
 
               });
           },
-           loadBahankajian(){
-              axios.get(URL+'api/bahankajian').then(data => {
+           loadKajian(){
+              axios.get(URL+'api/bkajian').then(data => {
                   this.kajian = data.data;
               });
           },
@@ -401,11 +432,9 @@
         },
         created() {
             this.loadPembentukanmatkul();
+            this.loadpembentukanmatkul();
             this.loadDetailmatkul();
-            this.loadBahankajian();
-            Fire.$on('AfterCreated', () => {
-                this.loadPembentukanmatkul();
-            })
+            this.loadKajian();
         }
     }
 </script>

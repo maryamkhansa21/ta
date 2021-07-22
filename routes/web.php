@@ -23,6 +23,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/{path}', [App\Http\Controllers\HomeController::class, 'index'])->where('path', '[A-Za-z]+');
 
-Route::get('cetakdata', function () {
+Route::get('/cetakdata', function () {
     return view('cetakdata');
 });

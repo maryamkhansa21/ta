@@ -17,7 +17,6 @@ class CreateDashboardTable extends Migration
             $table->id();
             $table->string('programstudi');
             $table->string('jenjang');
-            $table->text('kudikti')->nullable();
             $table->timestamps();
         });
     }

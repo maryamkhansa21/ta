@@ -52,6 +52,10 @@ class Detailprofillulusan extends Authenticatable
     }
     public function kajian()
     {
-        return $this->hasMany(Kajian::class, 'bahankajian_kajian');
+        return $this->hasMany(Kajian::class, 'detailprofillulusan_kajian');
+    }
+    public function kesepadananku()
+    {
+        return $this->hasMany(Kesepadananku::class, 'detailprofillulusan_kesepadanan');
     }
 }

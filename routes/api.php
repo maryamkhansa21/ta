@@ -33,8 +33,13 @@ Route::resource('matkul', 'App\Http\Controllers\API\MatkulController');
 Route::resource('detailmatkul', 'App\Http\Controllers\API\DetailmatkulController');
 Route::resource('pembentukanmatkul', 'App\Http\Controllers\API\PembentukanmatkulController');
 Route::resource('distribusimatkul', 'App\Http\Controllers\API\DistribusimatkulController');
+Route::get('/bkajian', 'App\Http\Controllers\API\PembentukanmatkulController@bkajian');
+Route::get('/totaltk', 'App\Http\Controllers\API\PembentukanmatkulController@totaltk');
+Route::get('/alltotaltk', 'App\Http\Controllers\API\PembentukanmatkulController@alltotaltk');
+Route::get('/besarsks', 'App\Http\Controllers\API\PembentukanmatkulController@besarsks');
 Route::put('/test/array', 'App\Http\Controllers\API\KajianController@testmultipleupdate');
+Route::put('/test/array', 'App\Http\Controllers\API\KesepadanankuController@multipleupdate');
 Route::get('/matkul/all', 'App\Http\Controllers\API\MatkulController@indexSemuaMatkul');
-Route::get('/distribusimatkul/cetak_data', 'App\Http\Controllers\API\DistribusimatkulController@cetak_data');
+
 //Route::put('/matkul/all', 'App\Http\Controllers\API\MatkulController@updateSemuaMatkul');
 //Route::delete('/matkul/all', 'App\Http\Controllers\API\MatkulController@destroySemuaMatkul');

@@ -30,4 +30,8 @@ class Detailmatkul extends Authenticatable
     {
         return $this->hasMany(Pembentukanmatkul::class, 'dtlmatkul_id', 'id');
     }
+    public function distribusimatkul()
+    {
+        return $this->hasMany(Distribusimatkul::class, 'dtlmatkul_id', 'id');
+    }
 }

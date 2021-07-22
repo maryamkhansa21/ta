@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bahankajian;
 use App\Models\Pembentukanmatkul as ModelsPembentukanmatkul;
+use App\Models\Kajian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +23,13 @@ class PembentukanmatkulController extends Controller
     {
         $pembentukanmatkul = ModelsPembentukanmatkul::orderBy('created_at', 'ASC')->with('detailmatkul')->get();
         return $pembentukanmatkul;
+    }
+
+    public function bkajian()
+    {
+        $bkajian = Kajian::orderBy('created_at', 'ASC')->with('bahankajian', 'detailprofillulusan')
+            ->get()->toJson();
+        return $bkajian;
     }
 
     /**
@@ -89,14 +98,15 @@ class PembentukanmatkulController extends Controller
     {
         $pembentukanmatkul = ModelsPembentukanmatkul::findOrFail($id);
         $this->validate($request, [
-            'tk' => ['required', 'string', 'max:10'],
-            'totaltk' => ['required', 'string', 'max:10'],
-            'besarsks' => ['required', 'string', 'max:10'],
-            'pembulatansks' => ['required', 'string', 'max:10'],
-            'psikomotorik' => ['required', 'string', 'max:10'],
-            'jenismatkul' => ['required', 'string', 'max:10'],
-            'jam' => ['required', 'string', 'max:10'],
-            'smt' => ['required', 'string', 'max:20'],
+            'tk' => ['required', 'string', 'max:255'],
+            'totaltk' => ['required', 'string', 'max:255'],
+            'alltotaltk' => ['required', 'string', 'max:255'],
+            'besarsks' => ['required', 'string', 'max:255'],
+            'pembulatansks' => ['required', 'string', 'max:255'],
+            'psikomotorik' => ['required', 'string', 'max:255'],
+            'jenismatkul' => ['required', 'string', 'max:255'],
+            'jam' => ['required', 'string', 'max:255'],
+            'smt' => ['required', 'string', 'max:255'],
             'dtlmatkul_id' => ['required'],
             'bahankajian_id' => ['required'],
         ]);

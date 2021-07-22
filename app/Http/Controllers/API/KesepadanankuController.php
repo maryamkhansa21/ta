@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kesepadananku as ModelsKesepadananku;
+use App\Models\Dashboard;
 use App\Models\Detailprofillulusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,7 @@ class KesepadanankuController extends Controller
      */
     public function index()
     {
-        $kesepadananku = ModelsKesepadananku::orderBy('created_at', 'ASC')->with('dashboard', 'detailprofillulusan')->get();
+        $kesepadananku = ModelsKesepadananku::orderBy('created_at', 'ASC')->with('detailprofillulusan')->paginate(100)->toJson();
         return $kesepadananku;
     }
 
@@ -30,20 +31,18 @@ class KesepadanankuController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'kuprodi' => ['required', 'string', 'max:1000'],
-            'kudikti_id' => ['required'],
-        ]);
-        return ModelsKesepadananku::create([
-            'kuprodi' => $request['kuprodi'],
-            'kudikti_id' => $request['kudikti_id']
-
+            'details' => ['required'],
+            'kudikti' => ['required', 'string', 'max:1000'],
         ]);
         $kesepadananku = new ModelsKesepadananku();
+        $kesepadananku->kudikti = $request['kudikti'];
 
         $kesepadananku->save();
 
         $details = Detailprofillulusan::find($request['details']);
         $kesepadananku->detailprofillulusan()->attach($details);
+
+        return 'Kesepadanan sukses dibuat!';
     }
 
 
@@ -57,6 +56,7 @@ class KesepadanankuController extends Controller
     {
         $kesepadananku = ModelsKesepadananku::find($id);
         return ['message' => $kesepadananku];
+       
     }
 
     /**
@@ -70,11 +70,13 @@ class KesepadanankuController extends Controller
     {
         $kesepadananku = ModelsKesepadananku::findOrFail($id);
         $this->validate($request, [
-            'kuprodi' => ['required', 'string', 'max:1000'],
-            'kudikti_id' => ['required'],
+            'details' => ['required'],
+            'kudikti' => ['required', 'string', 'max:1000'],
         ]);
-        $kesepadananku->update($request->all());
-        return ['message' => 'Kesepadanan Keterampilan Umum Update'];
+        $kesepadananku->kudikti = $request->kudikti;
+        $kesepadananku->detailprofillulusan()->sync($request['details']);
+        $kesepadananku->save();
+        return ['message' => 'Kesepadanan Update'];
     }
 
     /**
@@ -85,8 +87,17 @@ class KesepadanankuController extends Controller
      */
     public function destroy($id)
     {
-        $detailprofillulusan = ModelsKesepadananku::findOrFail($id);
-        $detailprofillulusan->delete();
+        $kesepadananku = ModelsKesepadananku::findOrFail($id);
+        $kesepadananku->delete();
         return ['message' => 'Kesepadanan Keterampilan Umum Update Deleted'];
+    }
+    public function multipleupdate(Request $request)
+    {
+        $input = $request->all();
+        $data_array = $request['data_array'];
+        // $request['data_array'] = implode(',', $data_array);
+
+        // User::create($input);
+        return $data_array;
     }
 }

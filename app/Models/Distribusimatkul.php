@@ -47,7 +47,7 @@ class Distribusimatkul extends Authenticatable
     //];
     public function pembentukanmatkul()
     {
-        return $this->belongsTo(Pembentukanmatkul::class, 'smt_id', 'sks_id', 'jam_id');
+        return $this->belongsTo(Pembentukanmatkul::class, 'smt_id', 'id');
     }
     public function detailmatkul()
     {

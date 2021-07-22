@@ -57,5 +57,9 @@ class Kajian extends Authenticatable
     {
         return $this->hasOne(Detailmatkul::class, 'matkul_id', 'id');
     }
+    public function pembentukanmatkul()
+    {
+        return $this->hasMany(Pembentukanmatkul::class, 'bahankajian_id', 'id');
+    }
     
 }

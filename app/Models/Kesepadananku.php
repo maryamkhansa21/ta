@@ -18,8 +18,7 @@ class Kesepadananku extends Authenticatable
      */
     protected $table = "kesepadananku";
     protected $fillable = [
-        'kudikti_id',
-        'kuprodi',
+        'kudikti',
     ];
 
     /**
@@ -40,12 +39,8 @@ class Kesepadananku extends Authenticatable
     //protected $casts = [
     //'email_verified_at' => 'datetime',
     //];
-    public function dashboard()
-    {
-        return $this->belongsTo(Dashboard::class, 'kudikti');
-    }
     public function detailprofillulusan()
     {
-        return $this->belongsToMany(Detailprofillulusan::class, 'detailprofillulusan_kajian');
+        return $this->belongsToMany(Detailprofillulusan::class, 'detailprofillulusan_kesepadanan');
     }
 }

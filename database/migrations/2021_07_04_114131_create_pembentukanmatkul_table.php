@@ -17,6 +17,7 @@ class CreatePembentukanmatkulTable extends Migration
             $table->id();
             $table->string('tk')->nullable();
             $table->string('totaltk')->nullable();
+            $table->string('alltotaltk')->nullable();
             $table->string('besarsks')->nullable();
             $table->string('pembulatansks')->nullable();
             $table->string('psikomotorik')->nullable();

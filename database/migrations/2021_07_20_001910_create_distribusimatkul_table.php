@@ -17,10 +17,10 @@ class CreateDistribusimatkulTable extends Migration
             $table->id();
             $table->string('totalsks');
             $table->string('totaljam');
-            //$table->bigInteger('dtlmatkul_id')->unsigned();
-            //$table->foreign('dtlmatkul_id')->references('id')->on('detailmatkul')->onDelete('cascade');
-            //$table->bigInteger('smt_id')->unsigned();
-            //$table->foreign('smt_id')->references('id')->on('pembentukanmatkul')->onDelete('cascade');
+            $table->bigInteger('dtlmatkul_id')->unsigned();
+            $table->foreign('dtlmatkul_id')->references('id')->on('detailmatkul')->onDelete('cascade');
+            $table->bigInteger('smt_id')->unsigned();
+            $table->foreign('smt_id')->references('id')->on('pembentukanmatkul')->onDelete('cascade');
             $table->timestamps();
         });
     }

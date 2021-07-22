@@ -30,12 +30,14 @@ class DashboardController extends Controller
         $this->validate($request, [
             'programstudi' => ['required', 'string', 'max:255'],
             'jenjang' => ['required', 'string', 'max:255'],
-            'kudikti' => ['required', 'string', 'max:1000'],
+
+        
         ]);
         return ModelsDashboard::create([
             'programstudi' => $request['programstudi'],
             'jenjang' => $request['jenjang'],
-            'kudikti' => $request['kudikti']
+
+            
 
         ]);
     }
@@ -65,7 +67,7 @@ class DashboardController extends Controller
         $this->validate($request, [
             'programstudi' => ['required', 'string', 'max:255'],
             'jenjang' => ['required', 'string', 'max:255'],
-            'kudikti' => ['required', 'string', 'max:1000'],
+   
         ]);
         $dashboard->update($request->all());
         return ['message' => 'Dashboard Update'];

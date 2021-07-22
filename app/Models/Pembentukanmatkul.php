@@ -20,6 +20,7 @@ class Pembentukanmatkul extends Authenticatable
     protected $fillable = [
         'tk',
         'totaltk',
+        'alltotaltk',
         'besarsks',
         'pembulatansks',
         'psikomotorik',
@@ -56,5 +57,17 @@ class Pembentukanmatkul extends Authenticatable
     public function bahankajian()
     {
         return $this->belongsToMany(Bahankajian::class, 'bahankajian_kajian');
+    }
+    public function distribusimatkul()
+    {
+        return $this->hasMany(Distribusimatkul::class, 'distribusimatkul');
+    }
+    public function pembentukanmatkul()
+    {
+        return $this->belongsToMany(Pembentukanmatkul::class, 'tk_pembentukanmatkul');
+    }
+    public function kajian()
+    {
+        return $this->belongsToMany(Kajian::class, 'bahankajian_id');
     }
 }

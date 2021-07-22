@@ -30,8 +30,8 @@ class DetailprofillulusanController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code' => ['required', 'string', 'max:255'],
-            'detail' => ['required', 'string', 'max:1000'],
+            'code' => ['required', 'string', 'max:1000'],
+            'detail' => ['required', 'string', 'max:10000'],
             'profil_id' => ['required'],
             'unsur' => ['required'],
         ]);
@@ -68,8 +68,8 @@ class DetailprofillulusanController extends Controller
     {
         $detailprofillulusan = ModelsDetailprofillulusan::findOrFail($id);
         $this->validate($request, [
-            'code' => ['required', 'string', 'max:255'],
-            'detail' => ['required', 'string', 'max:1000'],
+            'code' => ['required', 'string', 'max:1000'],
+            'detail' => ['required', 'string', 'max:10000'],
             'profil_id' => ['required'],
             'unsur' => ['required'],
         ]);
