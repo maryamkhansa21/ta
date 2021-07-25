@@ -15,8 +15,8 @@ class CreateDistribusimatkulTable extends Migration
     {
         Schema::create('distribusimatkul', function (Blueprint $table) {
             $table->id();
-            $table->string('totalsks');
-            $table->string('totaljam');
+            $table->integer('totalsks');
+            $table->integer('totaljam');
             $table->bigInteger('dtlmatkul_id')->unsigned();
             $table->foreign('dtlmatkul_id')->references('id')->on('detailmatkul')->onDelete('cascade');
             $table->bigInteger('smt_id')->unsigned();

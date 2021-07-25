@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\DistribusimatkulController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/{path}', [App\Http\Controllers\HomeController::class, 'index'])->where('path', '[A-Za-z]+');
 
-Route::get('/cetakdata', function () {
-    return view('cetakdata');
-});
+// Kandani kan enek salah wkwkwkwk
+Route::get('/cetakdata/{smt}',[DistribusimatkulController::class, 'cetakdata']);

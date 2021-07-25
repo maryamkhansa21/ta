@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Distribusimatkul as ModelsDistribusimatkul;
 use App\Models\Pembentukanmatkul as ModelsPembentukanmatkul;
 use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class DistribusimatkulController extends Controller
@@ -18,18 +18,16 @@ class DistribusimatkulController extends Controller
     public function index()
     {
         $distribusimatkul = ModelsDistribusimatkul::orderBy('created_at', 'ASC')->with('pembentukanmatkul', 'detailmatkul')->get();
-        return $distribusimatkul;
+        return view('/cetakdata', compact('distribusimatkul'));
     }
 
-    public function totalsks($id)
+    public function cetakdata($smt)
     {
-
-        $totalsks = ModelsDistribusimatkul::with('pembentukanmatkul')->where('pembulatansks', $id)->orderBy('created_at', 'ASC')->sum('pembulatansks')->get();
-    }
-    public function totaljam($id)
-    {
-
-        $totaljam = ModelsDistribusimatkul::with('pembentukanmatkul')->where('jam', $id)->orderBy('created_at', 'ASC')->sum('jam')->get();
+        $distribusimatkul = ModelsPembentukanmatkul::with('detailmatkul')->where('smt', $smt)->get();
+        // dd($distribusimatkul);
+        // return view('cetakdata', ['distribusimatkul' => $distribusimatkul]);
+        $pdf = PDF::loadview('cetakdata', ['distribusimatkul' => $distribusimatkul]);
+        return $pdf->download('Kurikulum ' .$smt .'.pdf');
     }
     /**
      * Store a newly created resource in storage.

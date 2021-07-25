@@ -9,18 +9,20 @@
             </div>
             <!-- /.card -->
             <div class="col-md-6" data-select2-id="14">
+                <form action="/cetakdata" method="post">
               <div class="form-group" data-select2-id="13">
                 <label>Pilih Semester :</label>
                 <select name="smt"  placeholder="Semester" v-model="form.smt_id" id="smt" class="form-control" :class="{ 'is-invalid': form.errors.has('smt_id') }">
-                        <option v-for="smt in pembentukanmatkul" :key="smt.id" v-bind:value="smt.id">{{ smt.pembentukanmatkul }}</option>
+                        <option v-for="(smt, i) in listSemester" :key="i" v-bind:value="smt">{{ smt }}</option>
                 </select>
               </div>
+                </form>
             </div>
           </div>
         </div>
          <div class="row">
             <div class="col-12">
-               <a href="/cetakdata" target="_blank" class="btn btn-success float-right"><i class="fa fa-print"></i>Cetak Data</a>
+               <a :href="`/cetakdata/${form.smt_id}`" target="_blank" class="btn btn-success float-right"><i class="fa fa-print"></i>Cetak Data</a>
             </div>
         </div>
     </div>
@@ -43,7 +45,8 @@
                     jam_id:'',
                     totalsks:'',
                     totaljam:''
-                })
+                }),
+                listSemester: [],
             }
         },
         methods:{
@@ -79,12 +82,17 @@
           loadPembentukanmatkul(){
               axios.get(URL+'api/pembentukanmatkul').then(data => {
                   this.pembentukanmatkul= data.data;
-                  
+                  this.pembentukanmatkul.forEach((item) => {
+                      if(!this.listSemester.includes(item.smt)){
+                          this.listSemester.push(item.smt);
+                      }
+                  });
               });
           },
           loadDistribusimatkul(){
               axios.get(URL+'api/distribusimatkul').then(data => {
                   this.distribusimatkul= data.data;
+                  console.log(data.data);
               });
           },
           createDistribusimatkul(){

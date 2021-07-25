@@ -33,6 +33,7 @@ Route::resource('matkul', 'App\Http\Controllers\API\MatkulController');
 Route::resource('detailmatkul', 'App\Http\Controllers\API\DetailmatkulController');
 Route::resource('pembentukanmatkul', 'App\Http\Controllers\API\PembentukanmatkulController');
 Route::resource('distribusimatkul', 'App\Http\Controllers\API\DistribusimatkulController');
+// Route::get('/cetakdata', 'App\Http\Controllers\API\DistribusimatkulController@cetakdata');
 Route::get('/bkajian', 'App\Http\Controllers\API\PembentukanmatkulController@bkajian');
 Route::get('/totaltk', 'App\Http\Controllers\API\PembentukanmatkulController@totaltk');
 Route::get('/alltotaltk', 'App\Http\Controllers\API\PembentukanmatkulController@alltotaltk');

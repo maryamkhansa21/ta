@@ -38,19 +38,19 @@
                       <td>{{pembentukanmatkul.detailmatkul.dtlmatkul}}</td>
                       <td>{{pembentukanmatkul.bahankajian}}</td>
                      <td>
-                          <select name="tk" v-model="dataTKNew[index].dataTk1" v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk1" v-bind:value="pembentukanmatkul.tk" v-on:input="jumlahtk(index)">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTKNew[index].dataTk2" v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk2" v-bind:value="pembentukanmatkul.tk" v-on:input="jumlahtk(index)">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTKNew[index].dataTk3" v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk3" v-bind:value="pembentukanmatkul.tk" v-on:input="jumlahtk(index)">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTKNew[index].dataTk4" v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk4" v-bind:value="pembentukanmatkul.tk" v-on:input="jumlahtk(index)">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
-                          <select name="tk" v-model="dataTKNew[index].dataTk5" v-bind:value="pembentukanmatkul.tk">
+                          <select name="tk" v-model="dataTKNew[index].dataTk5" v-bind:value="pembentukanmatkul.tk" v-on:input="jumlahtk(index)">
                             <option v-for="tk in tk_data" v-bind:key="tk" v-bind:value="tk">{{tk}}</option>
                           </select>
 
@@ -59,24 +59,24 @@
                       <td>{{pembentukanmatkul.alltotaltk}}</td>
                       <td>{{pembentukanmatkul.besarsks}}</td>
                       <td>{{pembentukanmatkul.pembulatansks}}</td>
-                      <td> <select name="psikomotorik" v-model="pembentukanmatkul.psikomotorik" id="psikomotorik"  v-bind:value="pembentukanmatkul.psikomotorik">
+                      <td> <select name="psikomotorik" v-model="pembentukanmatkul.psikomotorik" id="psikomotorik"  v-bind:value="pembentukanmatkul.psikomotorik" v-on:input="jenisMatkul(index)">
                             <option v-for="psikomotorik in psikomotorik_data" v-bind:key="psikomotorik" v-bind:value="psikomotorik">{{psikomotorik}}</option>
                           </select>
                       </td>
                       <td>
-                          <div v-if="psikomotorik === 'P1'">
+                          <div v-if="pembentukanmatkul.psikomotorik === 'P1'" >
                             Teori
                             </div>
-                            <div v-else-if="psikomotorik === 'P2'">
+                            <div v-else-if="pembentukanmatkul.psikomotorik === 'P2'">
                             Teori
                             </div>
-                            <div v-else-if="psikomotorik === 'P3'">
+                            <div v-else-if="pembentukanmatkul.psikomotorik === 'P3'">
                             Praktek
                             </div>
-                            <div v-else-if="psikomotorik === 'P4'">
+                            <div v-else-if="pembentukanmatkul.psikomotorik === 'P4'">
                             Praktek
                             </div>
-                            <div v-else-if="psikomotorik === 'P5'">
+                            <div v-else-if="pembentukanmatkul.psikomotorik === 'P5'">
                             Praktek
                             </div>
                             <div v-else>
@@ -85,11 +85,11 @@
 
                       </td>
                       <td>
-                            <div v-if="jenismatkul === 'Teori'">
-                            {{pembulatansks*1}}
+                            <div v-if="pembentukanmatkul.jenismatkul === 'Praktek'" >
+                            {{pembentukanmatkul.pembulatansks*3}}
                             </div>
-                            <div v-else-if="jenismatkul === 'Praktek'">
-                            {{pembulatansks*3}}
+                            <div v-else-if="pembentukanmatkul.jenismatkul === 'Teori'" >
+                            {{pembentukanmatkul.pembulatansks}}
                             </div>
                             <div v-else>
                             -
@@ -253,7 +253,7 @@
                 bahankajian : [],
                 bahankajian_kajian : [],
                 form:new Form({
-                    tk :'',
+                    
                     totaltk:'',
                     alltotaltk:'',
                     besarsks:'',
@@ -261,9 +261,9 @@
                     psikomotorik:'',
                     jenismatkul:'',
                     jam:'',
-                    smt:'',
-                    dtlmatkul_id:[],
-                    bahankajian_id:[],
+                    
+                    
+                    
 
                 }),
                 smt : '',
@@ -271,13 +271,15 @@
                 dataMatkul : [],
                 dtlmatkulsById : [],
                 bKajiansById : [],
+                bahankajian_id:[],
+               
 
                  tk_data : [
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5"
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
                 ],
                 psikomotorik_data : [
                   "P1",
@@ -289,32 +291,48 @@
             }
         },
        mounted() {
-            for(var i=0;i<15;i++){
+            for(var i=0;i<75;i++){
                 this.dataTKNew.push({
-                    dataTk1 : '',
-                    dataTk2 : '',
-                    dataTk3 : '',
-                    dataTk4 : '',
-                    dataTk5 : '',
+                    dataTk1 : 0,
+                    dataTk2 : 0,
+                    dataTk3 : 0,
+                    dataTk4 : 0,
+                    dataTk5 : 0,
                 })
             }
        },
-       computed: {
-           totaltk: function(){
-               return totaltk+=parseInt(this.tk)
-           },
-           alltotaltk: function(){
-               return alltotaltk+=parseInt(this.totaltk)
-           },
-           besarsks: function(){
-               return parseInt(this.totaltk) / parseInt(this.alltotaltk) * 144;
-           },
-           pembulatansks: function(){
-               return parseInt(this.besarsks);
-           }
-
-       },
+   
        methods:{
+           jumlahtk(index){
+               
+               this.pembentukanmatkul[index].totaltk =parseInt(this.dataTKNew[index].dataTk1, 10) + parseInt(this.dataTKNew[index].dataTk2, 10) + parseInt(this.dataTKNew[index].dataTk3, 10) + parseInt(this.dataTKNew[index].dataTk4, 10) + parseInt(this.dataTKNew[index].dataTk5, 10); 
+               let alltk = 0;
+               this.pembentukanmatkul.forEach((item) =>{
+                   alltk += item.totaltk;
+               })
+               for(let i=0; i < this.pembentukanmatkul.length; i++){
+                  this.pembentukanmatkul[i].alltotaltk = alltk;
+                }
+               for(let i=0; i < this.pembentukanmatkul.length; i++){
+                  this.pembentukanmatkul[i].besarsks = (this.pembentukanmatkul[i].totaltk / this.pembentukanmatkul[i].alltotaltk) * 144;
+                  this.pembentukanmatkul[i].pembulatansks = this.pembentukanmatkul[i].besarsks.toFixed(0)
+               
+           }
+           },
+           jenisMatkul(index){
+
+                const grupTeori = ['P1', 'P2'];
+                if(grupTeori.includes(this.pembentukanmatkul[index].psikomotorik)) {
+                    this.pembentukanmatkul[index].jenismatkul = 'Teori';
+                    this.pembentukanmatkul[index].jam = this.pembentukanmatkul[index].pembulatansks;
+                }else{
+                    this.pembentukanmatkul[index].jenismatkul = 'Praktek';
+                    this.pembentukanmatkul[index].jam = this.pembentukanmatkul[index].pembulatansks*3
+                }
+                
+               
+            },
+           
            updateDetail(dtlmatkuls) {
                let dtlmatkulsById = [];
 
@@ -325,13 +343,7 @@
                this.dtlmatkulsById = dtlmatkulsById;
            },
            updatePembentukanmatkul(pembentukanmatkul){
-               if(this.dataMatkul.length==0){
-                    pembentukanmatkul.detailmatkul.forEach(data=>{
-                        this.dataMatkul.push(data.id)
-                    })
-                } 
-                 
-                this.form.tk = pembentukanmatkul.tk;
+                
                 this.form.totaltk = pembentukanmatkul.totaltk;
                 this.form.alltotaltk = pembentukanmatkul.alltotaltk;
                 this.form.psikomotorik = pembentukanmatkul.psikomotorik;
@@ -339,7 +351,7 @@
                 this.form.pembulatansks = pembentukanmatkul.pembulatansks;
                 this.form.jam = pembentukanmatkul.jam;
                 this.form.jenismatkul = pembentukanmatkul.jenismatkul;
-                this.form.dtlmatkul_id = this.dtlmatkulssById;
+                
                 this.form.put(URL+'api/pembentukanmatkul/'+pembentukanmatkul.id);
                     $('#addNew').modal('hide');
                      Swal.fire(
@@ -348,7 +360,6 @@
                         'success'
                         )
                 Fire.$emit('AfterCreated');
-                this.dtlmatkul_id = [];
                 this.form.reset();
 
             },
@@ -396,7 +407,7 @@
          },
          loadpembentukanmatkul(){
               axios.get(URL+'api/bkajian').then(data => {
-                  this.pembentukanmatkul = data.data;
+                  this.bahankajian = data.data; 
               });
          },
           loadDetailmatkul(){
@@ -444,5 +455,3 @@
     background-color: rgba(255, 255, 255, 1);
 }
 </style>
-
-

@@ -2706,6 +2706,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var URL = "http://localhost:8000/";
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2722,7 +2724,8 @@ var URL = "http://localhost:8000/";
         jam_id: '',
         totalsks: '',
         totaljam: ''
-      })
+      }),
+      listSemester: []
     };
   },
   methods: {
@@ -2755,6 +2758,12 @@ var URL = "http://localhost:8000/";
 
       axios.get(URL + 'api/pembentukanmatkul').then(function (data) {
         _this2.pembentukanmatkul = data.data;
+
+        _this2.pembentukanmatkul.forEach(function (item) {
+          if (!_this2.listSemester.includes(item.smt)) {
+            _this2.listSemester.push(item.smt);
+          }
+        });
       });
     },
     loadDistribusimatkul: function loadDistribusimatkul() {
@@ -2762,6 +2771,7 @@ var URL = "http://localhost:8000/";
 
       axios.get(URL + 'api/distribusimatkul').then(function (data) {
         _this3.distribusimatkul = data.data;
+        console.log(data.data);
       });
     },
     createDistribusimatkul: function createDistribusimatkul() {
@@ -3611,73 +3621,63 @@ var URL = "http://localhost:8000/";
       bahankajian: [],
       bahankajian_kajian: [],
       form: new Form({
-        tk: '',
         totaltk: '',
         alltotaltk: '',
         besarsks: '',
         pembulatansks: '',
         psikomotorik: '',
         jenismatkul: '',
-        jam: '',
-        smt: '',
-        dtlmatkul_id: [],
-        bahankajian_id: []
+        jam: ''
       }),
       smt: '',
       dataTKNew: [],
       dataMatkul: [],
       dtlmatkulsById: [],
       bKajiansById: [],
-      tk_data: ["1", "2", "3", "4", "5"],
+      bahankajian_id: [],
+      tk_data: [1, 2, 3, 4, 5],
       psikomotorik_data: ["P1", "P2", "P3", "P4", "P5"]
     };
   },
   mounted: function mounted() {
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 75; i++) {
       this.dataTKNew.push({
-        dataTk1: '',
-        dataTk2: '',
-        dataTk3: '',
-        dataTk4: '',
-        dataTk5: ''
+        dataTk1: 0,
+        dataTk2: 0,
+        dataTk3: 0,
+        dataTk4: 0,
+        dataTk5: 0
       });
     }
   },
-  computed: {
-    totaltk: function (_totaltk) {
-      function totaltk() {
-        return _totaltk.apply(this, arguments);
-      }
-
-      totaltk.toString = function () {
-        return _totaltk.toString();
-      };
-
-      return totaltk;
-    }(function () {
-      return totaltk += parseInt(this.tk);
-    }),
-    alltotaltk: function (_alltotaltk) {
-      function alltotaltk() {
-        return _alltotaltk.apply(this, arguments);
-      }
-
-      alltotaltk.toString = function () {
-        return _alltotaltk.toString();
-      };
-
-      return alltotaltk;
-    }(function () {
-      return alltotaltk += parseInt(this.totaltk);
-    }),
-    besarsks: function besarsks() {
-      return parseInt(this.totaltk) / parseInt(this.alltotaltk) * 144;
-    },
-    pembulatansks: function pembulatansks() {
-      return parseInt(this.besarsks);
-    }
-  },
   methods: {
+    jumlahtk: function jumlahtk(index) {
+      this.pembentukanmatkul[index].totaltk = parseInt(this.dataTKNew[index].dataTk1, 10) + parseInt(this.dataTKNew[index].dataTk2, 10) + parseInt(this.dataTKNew[index].dataTk3, 10) + parseInt(this.dataTKNew[index].dataTk4, 10) + parseInt(this.dataTKNew[index].dataTk5, 10);
+      var alltk = 0;
+      this.pembentukanmatkul.forEach(function (item) {
+        alltk += item.totaltk;
+      });
+
+      for (var i = 0; i < this.pembentukanmatkul.length; i++) {
+        this.pembentukanmatkul[i].alltotaltk = alltk;
+      }
+
+      for (var _i = 0; _i < this.pembentukanmatkul.length; _i++) {
+        this.pembentukanmatkul[_i].besarsks = this.pembentukanmatkul[_i].totaltk / this.pembentukanmatkul[_i].alltotaltk * 144;
+        this.pembentukanmatkul[_i].pembulatansks = this.pembentukanmatkul[_i].besarsks.toFixed(0);
+      }
+    },
+    jenisMatkul: function jenisMatkul(index) {
+      var grupTeori = ['P1', 'P2'];
+
+      if (grupTeori.includes(this.pembentukanmatkul[index].psikomotorik)) {
+        this.pembentukanmatkul[index].jenismatkul = 'Teori';
+        this.pembentukanmatkul[index].jam = this.pembentukanmatkul[index].pembulatansks;
+      } else {
+        this.pembentukanmatkul[index].jenismatkul = 'Praktek';
+        this.pembentukanmatkul[index].jam = this.pembentukanmatkul[index].pembulatansks * 3;
+      }
+    },
     updateDetail: function updateDetail(dtlmatkuls) {
       var dtlmatkulsById = [];
       dtlmatkuls.forEach(function (dtlmatkul) {
@@ -3686,15 +3686,6 @@ var URL = "http://localhost:8000/";
       this.dtlmatkulsById = dtlmatkulsById;
     },
     updatePembentukanmatkul: function updatePembentukanmatkul(pembentukanmatkul) {
-      var _this = this;
-
-      if (this.dataMatkul.length == 0) {
-        pembentukanmatkul.detailmatkul.forEach(function (data) {
-          _this.dataMatkul.push(data.id);
-        });
-      }
-
-      this.form.tk = pembentukanmatkul.tk;
       this.form.totaltk = pembentukanmatkul.totaltk;
       this.form.alltotaltk = pembentukanmatkul.alltotaltk;
       this.form.psikomotorik = pembentukanmatkul.psikomotorik;
@@ -3702,12 +3693,10 @@ var URL = "http://localhost:8000/";
       this.form.pembulatansks = pembentukanmatkul.pembulatansks;
       this.form.jam = pembentukanmatkul.jam;
       this.form.jenismatkul = pembentukanmatkul.jenismatkul;
-      this.form.dtlmatkul_id = this.dtlmatkulssById;
       this.form.put(URL + 'api/pembentukanmatkul/' + pembentukanmatkul.id);
       $('#addNew').modal('hide');
       Swal.fire('Updated!', 'Information has been updated.', 'success');
       Fire.$emit('AfterCreated');
-      this.dtlmatkul_id = [];
       this.form.reset();
     },
     editModal: function editModal(pembentukanmatkul) {
@@ -3723,7 +3712,7 @@ var URL = "http://localhost:8000/";
       $('#addNew').modal('show');
     },
     deletePembentukanmatkul: function deletePembentukanmatkul(id) {
-      var _this2 = this;
+      var _this = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -3736,7 +3725,7 @@ var URL = "http://localhost:8000/";
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this2.form["delete"](URL + 'api/pembentukanmatkul/' + id).then(function () {
+          _this.form["delete"](URL + 'api/pembentukanmatkul/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreate');
           })["catch"](function () {
@@ -3746,42 +3735,42 @@ var URL = "http://localhost:8000/";
       });
     },
     loadPembentukanmatkul: function loadPembentukanmatkul() {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.get(URL + 'api/pembentukanmatkul').then(function (data) {
-        _this3.pembentukanmatkul = data.data;
+        _this2.pembentukanmatkul = data.data;
       });
     },
     loadpembentukanmatkul: function loadpembentukanmatkul() {
-      var _this4 = this;
+      var _this3 = this;
 
       axios.get(URL + 'api/bkajian').then(function (data) {
-        _this4.pembentukanmatkul = data.data;
+        _this3.bahankajian = data.data;
       });
     },
     loadDetailmatkul: function loadDetailmatkul() {
-      var _this5 = this;
+      var _this4 = this;
 
       axios.get(URL + 'api/detailmatkul').then(function (data) {
-        _this5.detailmatkul = data.data;
-        console.log(_this5.detailmatkul);
+        _this4.detailmatkul = data.data;
+        console.log(_this4.detailmatkul);
       });
     },
     loadKajian: function loadKajian() {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.get(URL + 'api/bkajian').then(function (data) {
-        _this6.kajian = data.data;
+        _this5.kajian = data.data;
       });
     },
     createPembentukanmatkul: function createPembentukanmatkul() {
-      var _this7 = this;
+      var _this6 = this;
 
       var detailMatkulArray = [];
       this.dataMatkul.forEach(function (data) {
         detailMatkulArray.push({
           dtlmatkul_id: data,
-          smt: _this7.smt
+          smt: _this6.smt
         });
       });
       axios.post(URL + 'api/pembentukanmatkul', {
@@ -47906,63 +47895,83 @@ var render = function() {
           "div",
           { staticClass: "col-md-6", attrs: { "data-select2-id": "14" } },
           [
-            _c(
-              "div",
-              { staticClass: "form-group", attrs: { "data-select2-id": "13" } },
-              [
-                _c("label", [_vm._v("Pilih Semester :")]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.form.smt_id,
-                        expression: "form.smt_id"
+            _c("form", { attrs: { action: "/cetakdata", method: "post" } }, [
+              _c(
+                "div",
+                {
+                  staticClass: "form-group",
+                  attrs: { "data-select2-id": "13" }
+                },
+                [
+                  _c("label", [_vm._v("Pilih Semester :")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.smt_id,
+                          expression: "form.smt_id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: { "is-invalid": _vm.form.errors.has("smt_id") },
+                      attrs: {
+                        name: "smt",
+                        placeholder: "Semester",
+                        id: "smt"
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "smt_id",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
                       }
-                    ],
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.form.errors.has("smt_id") },
-                    attrs: { name: "smt", placeholder: "Semester", id: "smt" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.form,
-                          "smt_id",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.pembentukanmatkul, function(smt) {
-                    return _c(
-                      "option",
-                      { key: smt.id, domProps: { value: smt.id } },
-                      [_vm._v(_vm._s(smt.pembentukanmatkul))]
-                    )
-                  }),
-                  0
-                )
-              ]
-            )
+                    },
+                    _vm._l(_vm.listSemester, function(smt, i) {
+                      return _c(
+                        "option",
+                        { key: i, domProps: { value: smt } },
+                        [_vm._v(_vm._s(smt))]
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
+            ])
           ]
         )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-success float-right",
+            attrs: { href: "/cetakdata/" + _vm.form.smt_id, target: "_blank" }
+          },
+          [_c("i", { staticClass: "fa fa-print" }), _vm._v("Cetak Data")]
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -47975,23 +47984,6 @@ var staticRenderFns = [
         _c("h3", { staticClass: "card-title" }, [
           _vm._v("Distribusi Mata Kuliah")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-success float-right",
-            attrs: { href: "/cetakdata", target: "_blank" }
-          },
-          [_c("i", { staticClass: "fa fa-print" }), _vm._v("Cetak Data")]
-        )
       ])
     ])
   }
@@ -48723,6 +48715,9 @@ var render = function() {
                         attrs: { name: "tk" },
                         domProps: { value: pembentukanmatkul.tk },
                         on: {
+                          input: function($event) {
+                            return _vm.jumlahtk(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48766,6 +48761,9 @@ var render = function() {
                         attrs: { name: "tk" },
                         domProps: { value: pembentukanmatkul.tk },
                         on: {
+                          input: function($event) {
+                            return _vm.jumlahtk(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48809,6 +48807,9 @@ var render = function() {
                         attrs: { name: "tk" },
                         domProps: { value: pembentukanmatkul.tk },
                         on: {
+                          input: function($event) {
+                            return _vm.jumlahtk(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48852,6 +48853,9 @@ var render = function() {
                         attrs: { name: "tk" },
                         domProps: { value: pembentukanmatkul.tk },
                         on: {
+                          input: function($event) {
+                            return _vm.jumlahtk(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48895,6 +48899,9 @@ var render = function() {
                         attrs: { name: "tk" },
                         domProps: { value: pembentukanmatkul.tk },
                         on: {
+                          input: function($event) {
+                            return _vm.jumlahtk(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48948,6 +48955,9 @@ var render = function() {
                         attrs: { name: "psikomotorik", id: "psikomotorik" },
                         domProps: { value: pembentukanmatkul.psikomotorik },
                         on: {
+                          input: function($event) {
+                            return _vm.jenisMatkul(index)
+                          },
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
                               .call($event.target.options, function(o) {
@@ -48982,31 +48992,31 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _vm.psikomotorik === "P1"
+                    pembentukanmatkul.psikomotorik === "P1"
                       ? _c("div", [
                           _vm._v(
                             "\n                      Teori\n                      "
                           )
                         ])
-                      : _vm.psikomotorik === "P2"
+                      : pembentukanmatkul.psikomotorik === "P2"
                       ? _c("div", [
                           _vm._v(
                             "\n                      Teori\n                      "
                           )
                         ])
-                      : _vm.psikomotorik === "P3"
+                      : pembentukanmatkul.psikomotorik === "P3"
                       ? _c("div", [
                           _vm._v(
                             "\n                      Praktek\n                      "
                           )
                         ])
-                      : _vm.psikomotorik === "P4"
+                      : pembentukanmatkul.psikomotorik === "P4"
                       ? _c("div", [
                           _vm._v(
                             "\n                      Praktek\n                      "
                           )
                         ])
-                      : _vm.psikomotorik === "P5"
+                      : pembentukanmatkul.psikomotorik === "P5"
                       ? _c("div", [
                           _vm._v(
                             "\n                      Praktek\n                      "
@@ -49020,19 +49030,19 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("td", [
-                    _vm.jenismatkul === "Teori"
+                    pembentukanmatkul.jenismatkul === "Praktek"
                       ? _c("div", [
                           _vm._v(
                             "\n                      " +
-                              _vm._s(_vm.pembulatansks * 1) +
+                              _vm._s(pembentukanmatkul.pembulatansks * 3) +
                               "\n                      "
                           )
                         ])
-                      : _vm.jenismatkul === "Praktek"
+                      : pembentukanmatkul.jenismatkul === "Teori"
                       ? _c("div", [
                           _vm._v(
                             "\n                      " +
-                              _vm._s(_vm.pembulatansks * 3) +
+                              _vm._s(pembentukanmatkul.pembulatansks) +
                               "\n                      "
                           )
                         ])

@@ -60,7 +60,7 @@ class Pembentukanmatkul extends Authenticatable
     }
     public function distribusimatkul()
     {
-        return $this->hasMany(Distribusimatkul::class, 'distribusimatkul');
+        return $this->hasMany(Distribusimatkul::class);
     }
     public function pembentukanmatkul()
     {

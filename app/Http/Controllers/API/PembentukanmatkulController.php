@@ -84,8 +84,6 @@ class PembentukanmatkulController extends Controller
             'psikomotorik' => ['required', 'string', 'max:255'],
             'jenismatkul' => ['required', 'string', 'max:255'],
 
-
-
         ]);
         $pembentukanmatkul->update($request->all());
         return ['message' => 'Pembentukan Mata Kuliah Update'];

@@ -1,46 +1,50 @@
-@extends('layouts.master')
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 
-@section('content')
-<template>
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
 
-	<body>
-		<style type="text/css">
-			table tr td,
-			table tr th {
-				font-size: 9pt;
-			}
-		</style>
-		<center>
-			<h5>Kurikulum</h5>
-			<h6></h6>
-		</center>
+#customers tr:nth-child(even){background-color: #f2f2f2;}
 
-		<table class='table table-bordered'>
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+<table class='table table-bordered' id="customers">
 			<thead>
 				<tr>
 					<th>Nama Mata Kuliah</th>
 					<th>Jenis Mata Kuliah</th>
 					<th>SKS</th>
 					<th>Jam</th>
-				<tr>Total SKS</tr>
-				<tr>Total Jam</tr>
+				<!-- <tr>Total SKS</tr>
+				<tr>Total Jam</tr> -->
 				</tr>
 			</thead>
 			<tbody>
 				@php $i=1 @endphp
 				@foreach($distribusimatkul as $dm)
 				<tr>
-					<td>{{ $i++ }}</td>
-					<td>{{$dm->dtlmatkul_id}}</td>
-					<td>{{$dm->jenismatkul_id}}</td>
-					<td>{{$dm->sks_id}}</td>
-					<td>{{$dm->jam_id}}</td>
-					<td>{{$dm->totalsks}}</td>
-					<td>{{$dm->totaljam}}</td>
+					<!-- <td>{{ $i++ }}</td> -->
+					<td>{{$dm->detailmatkul->dtlmatkul}}</td>
+					<td>{{$dm->jenismatkul}}</td>
+					<td>{{$dm->pembulatansks}}</td>
+					<td>{{$dm->jam}}</td>
+					<!-- <td>{{$dm->totalsks}}</td>
+					<td>{{$dm->totaljam}}</td> -->
 				</tr>
 				@endforeach
 			</tbody>
 		</table>
-	</body>
-</template>
-@endsection
