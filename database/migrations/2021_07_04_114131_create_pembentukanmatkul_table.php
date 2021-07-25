@@ -15,14 +15,14 @@ class CreatePembentukanmatkulTable extends Migration
     {
         Schema::create('pembentukanmatkul', function (Blueprint $table) {
             $table->id();
-            $table->string('tk')->nullable();
-            $table->string('totaltk')->nullable();
-            $table->string('alltotaltk')->nullable();
-            $table->string('besarsks')->nullable();
-            $table->string('pembulatansks')->nullable();
+            $table->integer('tk')->nullable();
+            $table->integer('totaltk')->nullable();
+            $table->integer('alltotaltk')->nullable();
+            $table->float('besarsks')->nullable();
+            $table->integer('pembulatansks')->nullable();
             $table->string('psikomotorik')->nullable();
             $table->string('jenismatkul')->nullable();
-            $table->string('jam')->nullable();
+            $table->integer('jam')->nullable();
             $table->string('smt');
             $table->bigInteger('dtlmatkul_id')->unsigned();
             $table->foreign('dtlmatkul_id')->references('id')->on('detailmatkul')->onDelete('cascade');

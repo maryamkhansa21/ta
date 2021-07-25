@@ -53,28 +53,6 @@ class PembentukanmatkulController extends Controller
         return ($request['dataMatkul']);
     }
 
-    public function totaltk($id)
-    {
-        $totaltk = ModelsPembentukanmatkul::with('tk')->where('tk', $id)->orderBy('created_at', 'ASC')->sum('tk')->get();
-    }
-
-    public function alltotaltk($id)
-    {
-        $alltotaltk = ModelsPembentukanmatkul::with('totaltk')->where('totaltk', $id)->orderBy('created_at', 'ASC')->sum('totaltk')->get();
-    }
-
-    public function besarsks($id)
-    {
-        $besarsks = ModelsPembentukanmatkul::with('totaltk')->where('totaltk', $id)->orderBy('created_at', 'ASC')->get();
-
-        $total = 0;
-
-        foreach ($besarsks as $d) {
-            $total += ($d->totaltk / $d->alltotaltk) * 144;
-        }
-
-        //return view('tambahdetailsetoran', compact('setoran', 'detailsetoran', 'nasabah', 'sampah', 'total'));
-    }
     /**
      * Display the specified resource.
      *
@@ -98,17 +76,16 @@ class PembentukanmatkulController extends Controller
     {
         $pembentukanmatkul = ModelsPembentukanmatkul::findOrFail($id);
         $this->validate($request, [
-            'tk' => ['required', 'string', 'max:255'],
-            'totaltk' => ['required', 'string', 'max:255'],
-            'alltotaltk' => ['required', 'string', 'max:255'],
-            'besarsks' => ['required', 'string', 'max:255'],
-            'pembulatansks' => ['required', 'string', 'max:255'],
+            'totaltk' => ['required', 'integer', 'max:255'],
+            'alltotaltk' => ['required', 'integer', 'max:255'],
+            'besarsks' => ['required', 'numeric', 'max:255'],
+            'pembulatansks' => ['required', 'integer', 'max:255'],
+            'jam' => ['required', 'integer', 'max:255'],
             'psikomotorik' => ['required', 'string', 'max:255'],
             'jenismatkul' => ['required', 'string', 'max:255'],
-            'jam' => ['required', 'string', 'max:255'],
-            'smt' => ['required', 'string', 'max:255'],
-            'dtlmatkul_id' => ['required'],
-            'bahankajian_id' => ['required'],
+
+
+
         ]);
         $pembentukanmatkul->update($request->all());
         return ['message' => 'Pembentukan Mata Kuliah Update'];
